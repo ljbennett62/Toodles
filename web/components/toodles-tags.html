@@ -9,20 +9,65 @@
         height: 48px;
       }
 
-      p {
+      .chip {
+        align-items: center;
         background-color: rgba( 0, 0, 0, 0.12 );
         border-radius: 32px;
         color: rgba( 0, 0, 0, 0.87 ); 
         cursor: default;
+        display: flex;
+        flex-direction: row;
         font-size: 14px;
         height: 32px;
         line-height: 32px;
         margin: 8px 16px 0 0;
-        padding: 0 12px 0 12px;
-      }      
+        padding: 0 4px 0 12px;        
+      }
+
+      .chip.hover {
+        background-color: rgba( 0, 0, 0, 0.54 );
+      }
+
+      button {
+        background: none;
+        background-image: url( /img/cancel.black.svg );
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 24px;
+        border: none;
+        border-radius: 24px;
+        height: 24px;
+        margin: 0 0 0 4px;
+        opacity: 0.54;
+        outline: none;
+        width: 24px;
+      }
+
+      button:hover {
+        background-image: url( /img/cancel.white.svg );
+        opacity: 1;
+      }
+
+      p {
+        color: rgba( 0, 0, 0, 0.87 );
+        font-size: 14px;
+        line-height: 32px;
+        margin: 0;
+        padding: 0;
+      }  
+
+      p.hover {
+        color: white;
+      }    
     </style>
-    <p>awesome</p>
-    <p>journey</p>    
+    <div class="chip">
+      <p>awesome</p>
+      <button on-mouseover="onOver" on-mouseout="onOut" on-click="onClick"></button>
+    </div>
+    <div class="chip">
+      <p>journey</p>
+      <button on-mouseover="onOver" on-mouseout="onOut" on-click="onClick"></button>
+    </div>
   </template>
   <script>
     class Tags extends Polymer.Element {  
@@ -45,7 +90,29 @@
       show() {
         this.style.display = 'flex';
       }      
+
+      onClick( evt ) {
+        evt.target.parentElement.remove();
+
+        let tags = [];
+
+        for( let c = 0; c < this.children.length; c++ ) {
+          console.log( this.children[c] );
+        }
+      }
+
+      onOut( evt ) {
+        evt.target.parentElement.classList.remove( 'hover' );
+        evt.target.parentElement.children[0].classList.remove( 'hover' );
+      }
+
+      onOver( evt ) {
+        evt.target.parentElement.classList.add( 'hover' );
+        evt.target.parentElement.children[0].classList.add( 'hover' );
+      }      
     }
+
+    Tags.CHANGE = 'tags_change';
 
     customElements.define( Tags.is, Tags );    
   </script>

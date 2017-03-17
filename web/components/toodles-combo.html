@@ -1,0 +1,52 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+
+<dom-module id="toodles-combo">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        flex-direction: row;
+        flex-basis: 0;
+        flex-grow: 1;
+        height: 48px;
+      }
+
+      .icon {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 24px;
+        height: 48px;
+        opacity: 0.54;
+        width: 48px;
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 48px;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <div class="icon" style$="background-image: url( [[icon]] );"></div>
+    <p class="current">Home</p>
+  </template>
+  <script>
+    class Combo extends Polymer.Element {  
+      static get is() { return 'toodles-combo' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      static get properties() {
+        return {
+        	selected: Number,
+          items: String,
+          icon: String
+        }
+      }
+    }
+
+    customElements.define( Combo.is, Combo );    
+  </script>
+</dom-module>
