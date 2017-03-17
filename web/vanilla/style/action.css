@@ -1,0 +1,62 @@
+#action {
+  align-items: center;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 16px;
+}
+
+#action > button.compose {
+  background-color: #F44336;
+  background-image: url( ../img/add.white.svg );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  border: none;
+  border-radius: 56px;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );
+  height: 56px;
+  outline: none;
+  width: 56px;
+}
+
+#action > button.compose.todo {
+  background-image: url( ../img/compose.white.svg );  
+}
+
+#action > button.location {
+  background-color: #2196F3;
+  background-image: url( ../img/location.white.svg );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  border: none;
+  border-radius: 32px;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );
+  height: 32px;
+  margin-bottom: 16px;
+  opacity: 0;
+  outline: none;
+  transition-duration: 0.50s;  
+  transition-property: opacity;  
+  width: 32px;
+}
+
+#action > button.account {
+  background-color: #2196F3;
+  background-image: url( ../img/account.white.svg );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  border: none;
+  border-radius: 32px;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );
+  height: 32px;
+  margin-bottom: 16px;
+  opacity: 0;
+  outline: none;
+  transition-duration: 0.50s;  
+  transition-property: opacity;    
+  width: 32px;
+}

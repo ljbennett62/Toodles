@@ -1,0 +1,165 @@
+<html>
+<head>
+
+<title>Test</title>
+
+<link href="style/test.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div>
+  <input id="peer" value="https://ba5d025f326946a1a17a37c120fd233c-vp0.us.blockchain.ibm.com:5002/chaincode">
+  <input id="user" value="user_type1_0">  
+</div>
+
+<div>
+  <input class="method" value="deploy" hidden="true">
+  <input class="function" value="init" readonly>    
+  <input class="argument" value="init">    
+  <input id="repository" value="https://github.com/krhoyt/Blockhead/toodles/chaincode">
+  <button>Deploy Chaincode</button>
+  <input id="chaincode" value="32cc6900893f59c2e9afe28ce934f8f9a0305a4f10c6d6c20c4ed7d980da7025313d73c2a27a9e0153f8ce2b0353121293a197177c9a87fc35fb203d66d8bd04">
+</div>
+
+<!-- Accounts -->
+
+<div>
+  <input class="method" value="query" hidden="true">
+  <input class="function" value="account_browse" readonly>  
+  <input class="argument" value="all">
+  <button>Account Browse</button>
+</div>
+
+<div>
+  <input class="method" value="query" hidden="true">
+  <input class="function" value="account_read" readonly>  
+  <input class="argument" value="krhoyt">
+  <input class="argument" value="abc123">  
+  <button>Account Read</button>
+</div>
+
+<div>
+  <input class="method" value="invoke" hidden="true">
+  <input class="function" value="account_edit" readonly>  
+  <input class="argument" value="abc-123">
+  <input class="argument" value="krhoyt">  
+  <input class="argument" value="abc123">  
+  <button>Account Edit</button>
+</div>
+
+<div>
+  <input class="method" value="invoke" hidden="true">
+  <input class="function" value="account_add" readonly>  
+  <input class="argument" value="abc-123">
+  <input class="argument" value="krhoyt">  
+  <input class="argument" value="abc123">  
+  <button>Account Add</button>
+</div>
+
+<div>
+  <input class="method" value="invoke" hidden="true">
+  <input class="function" value="account_delete" readonly>  
+  <input class="argument" value="abc-123">
+  <button>Account Delete</button>
+</div>
+
+<!-- Tasks -->
+
+<div>
+  <input class="method" value="query" hidden="true">
+  <input class="function" value="task_browse" readonly>  
+  <input class="argument" value="all">
+  <button>Task Browse</button>
+</div>
+
+<div>
+  <input class="method" value="query" hidden="true">
+  <input class="function" value="task_read" readonly>  
+  <input class="argument" value="xyz-321">
+  <button>Task Read</button>
+</div>
+
+<div>
+  <input class="method" value="invoke" hidden="true">
+  <input class="function" value="task_edit" readonly>  
+  <input class="argument" value="xyz-321" placeholder="Task ID">
+  <input class="argument" value="abc-123" placeholder="Account ID">
+  <input class="argument" value="0" placeholder="Due">  
+  <input class="argument" value="any" placeholder="Location ID">  
+  <input class="argument" value="0" placeholder="Duration">    
+  <input class="argument" value="0" placeholder="Energy">    
+  <input class="argument" placeholder="Tags">    
+  <input class="argument" placeholder="Notes">    
+  <input class="argument" value="false" placeholder="Complete">    
+  <input class="argument" value="New To Do" placeholder="Name">  
+  <button>Task Edit</button>
+</div>
+
+<div>
+  <input class="method" value="invoke" hidden="true">
+  <input class="function" value="task_add" readonly>  
+  <input class="argument" value="xyz-321">
+  <input class="argument" value="abc-123">
+  <input class="argument" value="New To Do" placeholder="Name">  
+  <input class="argument" value="0" placeholder="Due">  
+  <input class="argument" value="any" placeholder="Location ID">  
+  <input class="argument" value="0" placeholder="Duration">    
+  <input class="argument" value="0" placeholder="Energy">    
+  <input class="argument" value="1489509097754">  
+  <button>Task Add</button>
+</div>
+
+<div>
+  <input class="method" value="invoke" hidden="true">
+  <input class="function" value="task_delete" readonly>  
+  <input class="argument" value="xyz-321">
+  <button>Task Delete</button>
+</div>
+
+<!-- Locations -->
+
+<div>
+  <input class="method" value="query" hidden="true">
+  <input class="function" value="location_browse" readonly>  
+  <input class="argument" value="all">
+  <button>Location Browse</button>
+</div>
+
+<div>
+  <input class="method" value="query" hidden="true">
+  <input class="function" value="location_read" readonly>  
+  <input class="argument" value="xyz-321">
+  <button>Location Read</button>
+</div>
+
+<div>
+  <input class="method" value="invoke" hidden="true">
+  <input class="function" value="location_edit" readonly>  
+  <input class="argument" value="xyz-321">
+  <input class="argument" value="abc-123">
+  <input class="argument" value="Denver">
+  <button>Location Edit</button>
+</div>
+
+<div>
+  <input class="method" value="invoke" hidden="true">
+  <input class="function" value="location_add" readonly>  
+  <input class="argument" value="xyz-321">
+  <input class="argument" value="abc-123">
+  <input class="argument" value="Denver">
+  <button>Location Add</button>
+</div>
+
+<div>
+  <input class="method" value="invoke" hidden="true">
+  <input class="function" value="location_delete" readonly>  
+  <input class="argument" value="xyz-321">
+  <button>Location Delete</button>
+</div>
+
+<!-- Application -->
+<script src="script/test.js"></script>
+
+</body>
+</html>

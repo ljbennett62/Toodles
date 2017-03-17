@@ -1,0 +1,216 @@
+#list > .item {
+  background-color: white;  
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );  
+  display: flex;
+  flex-direction: column;
+  margin: 16px 88px 0 16px;
+}
+
+#list > .item.complete {
+  opacity: 0.38;
+}
+
+#list > .item > .short {
+  display: flex;
+  flex-direction: row;
+  height: 48px;  
+}
+
+#list > .item > .short > div.check {
+  background-image: url( ../img/check.box.outline.black.svg );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  height: 48px;
+  opacity: 0.54;
+  width: 48px;
+}
+
+#list > .item > .short > div.check.complete {
+  background-image: url( ../img/check.box.black.svg );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  height: 48px;
+  opacity: 0.54;
+  width: 48px;
+}
+
+#list > .item p.chip {
+  background-color: rgba( 0, 0, 0, 0.12 );
+  border-radius: 32px;
+  color: rgba( 0, 0, 0, 0.87 ); 
+  cursor: default;
+  font-size: 14px;
+  height: 32px;
+  line-height: 32px;
+  margin: 8px 16px 0 0;
+  padding: 0 12px 0 12px;
+}
+
+#list > .item > .short > input.label {
+  border: none;
+  color: rgba( 0, 0, 0, 0.87 );
+  cursor: default;
+  flex-grow: 1;
+  font-size: 16px;
+  line-height: 48px;
+  margin: 0 16px 0 0;
+  outline: none;
+  padding: 0 0 0 4px;
+}
+
+#list > .item > .short > p.remain {
+  border-left: solid 1px rgba( 0, 0, 0, 0.12 );
+  color: rgba( 0, 0, 0, 0.87 ); 
+  display: none;
+  font-size: 14px;
+  height: 48px;
+  line-height: 48px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 110px;
+}
+
+#list > .item > .detailed {
+  border-top: solid 1px rgba( 0, 0, 0, 0.12 );
+  display: none;
+  flex-direction: column;
+}
+
+#list > .item > .detailed > .fields {
+  border-top: solid 1px rgba( 0, 0, 0, 0.12 );  
+  display: flex;
+  flex-direction: row;
+}
+
+#list > .item > .detailed > .fields > div {
+  border-right: solid 1px rgba( 0, 0, 0, 0.12 );  
+  display: flex;
+  flex-basis: 0;
+  flex-direction: row;
+  flex-grow: 1;
+  font-size: 14px;  
+  height: 48px;
+}
+
+#list > .item > .detailed > .fields > div:last-of-type {
+  border: none;
+}
+
+#list > .item > .detailed > .fields p {
+  line-height: 48px;
+  margin: 0;
+  padding: 0;
+}
+
+#list > .item > .detailed > .fields .icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  height: 48px;
+  opacity: 0.54;
+  width: 48px;
+}
+
+#list > .item > .detailed > .fields > .due > .icon {
+  background-image: url( ../img/event.black.svg );
+}
+
+#list > .item > .detailed > .fields > .location > .icon {
+  background-image: url( ../img/location.black.svg );
+}
+
+#list > .item > .detailed > .fields > .duration > .icon {
+  background-image: url( ../img/duration.black.svg );
+}
+
+#list > .item > .detailed > .fields > .energy > .icon {
+  background-image: url( ../img/energy.black.svg );
+}
+
+#list > .item > .detailed > .notes {
+  border-top: solid 1px rgba( 0, 0, 0, 0.12 );    
+  display: flex;
+  flex-direction: row;
+  height: 96px;
+}
+
+#list > .item > .detailed > .notes > .icon {
+  background-image: url( ../img/note.black.svg );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  height: 48px;
+  opacity: 0.54;
+  width: 48px;  
+}
+
+#list > .item > .detailed > .notes > p {
+  flex-grow: 1;
+  font-size: 14px;
+  line-height: 48px;
+  margin: 0;
+  opacity: 0.54;
+  padding: 0;
+}
+
+#list > .item > .detailed > .tags {
+  display: flex;
+  flex-direction: row;
+}
+
+#list > .item > .detailed > .tags > input {
+  background: none;
+  border: none;
+  color: rgba( 0, 0, 0, 0.87 );   
+  flex-grow: 1;
+  font-size: 14px;  
+  line-height: 48px;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+}
+
+#list > .item > .detailed > .tags > .icon {
+  background-image: url( ../img/offer.black.svg );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  height: 48px;
+  opacity: 0.54;
+  width: 48px;
+}
+
+/*
+#list > div.item > div.short > div.complete {
+  background-image: url( ../img/check.box.black.svg );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  height: 48px;
+  opacity: 0.54;
+  width: 48px;
+}
+
+#list > div.item > div.options {
+  display: flex;
+  flex-direction: row;
+  height: 48px;
+  border-left: solid 1px rgba( 0, 0, 0, 0.12 );
+}
+
+#list > div.item > div.short > p.label {
+  color: rgba( 0, 0, 0, 0.87 );
+  cursor: default;
+  flex-grow: 1;
+  font-size: 16px;
+  line-height: 48px;
+  margin: 0;
+  padding: 0 0 0 4px;
+}
+
+
+*/

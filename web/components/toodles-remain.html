@@ -1,0 +1,50 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+
+<dom-module id="toodles-remain">
+  <template>
+    <style>
+      :host {
+        
+      }
+
+      p {
+        border-left: solid 1px rgba( 0, 0, 0, 0.12 );
+        color: rgba( 0, 0, 0, 0.87 ); 
+        display: block;
+        font-size: 14px;
+        height: 48px;
+        line-height: 48px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        width: 110px;
+      }      
+    </style>
+    <p>1 day left</p>
+  </template>
+  <script>
+    class Remain extends Polymer.Element {  
+      static get is() { return 'toodles-remain' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      static get properties() {
+        return {
+          due: Date
+        }
+      }
+
+      hide() {
+        this.style.display = 'none';
+      }
+
+      show() {
+        this.style.display = 'flex';
+      }      
+    }
+
+    customElements.define( Remain.is, Remain );    
+  </script>
+</dom-module>

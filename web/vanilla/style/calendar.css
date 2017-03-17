@@ -1,0 +1,82 @@
+#calendar {
+  align-items: center;
+  background-color: white;
+  border-bottom: 1px solid rgba( 0, 0, 0, 0.12 );
+  box-shadow: 0 0 5px rgba( 0, 0, 0, 0.26 );  
+  display: flex;
+  flex-direction: row;
+  height: 56px;
+}
+
+#calendar > button {
+  background: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  border: none;
+  border-radius: 2px;
+  height: 36px;
+  margin: 10px;
+  outline: none;
+  padding: 0;
+  width: 36px;
+}
+
+#calendar > button.left {
+  background-image: url( ../img/arrow.left.blue.svg );
+}
+
+#calendar > button.left:hover {
+  background-color: #2196F3;  
+  background-image: url( ../img/arrow.left.white.svg );
+}
+
+#calendar > button.right {
+  background-image: url( ../img/arrow.right.blue.svg );
+}
+
+#calendar > button.right:hover {
+  background-color: #2196F3;  
+  background-image: url( ../img/arrow.right.white.svg );
+}
+
+#calendar > div {
+  border-top: solid 2px white;
+  cursor: default;
+  display: flex;
+  flex-basis: 0;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 54px;
+  justify-content: center;
+}
+
+#calendar > div.selected {
+  border-top: 2px solid #2196F3; 
+  background-color: #E3F2FD;    
+}
+
+#calendar > div > p {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+#calendar > div > p:first-of-type {
+  color: rgba( 0, 0, 0, 0.87 );
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#calendar > div > p:last-of-type {
+  color: rgba( 0, 0, 0, 0.54 );
+  font-size: 12px;
+}
+
+#calendar > div > p.selected {
+  color: #2196F3;
+}
+
+#calendar > div > p.today {
+  color: #F44336;  
+}

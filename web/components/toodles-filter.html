@@ -1,0 +1,74 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/components/toodles-calendar.html">
+<link rel="import" href="/components/toodles-location.html">
+<link rel="import" href="/components/toodles-duration.html">
+<link rel="import" href="/components/toodles-energy.html">
+
+<dom-module id="toodles-filter">
+  <template>
+    <style>
+      :host {
+        background-color: white;
+        bottom: -235;
+        box-shadow: 0 0 5px rgba( 0, 0, 0, 0.26 );                  
+        display: none;
+        flex-direction: column;
+        left: 0;
+        position: absolute;
+        right: 0;
+      }
+    </style>
+    <toodles-calendar id="calendar"></toodles-calendar>
+    <toodles-location id="location" places="{{places}}"></toodles-location>
+    <toodles-duration id="duration"></toodles-duration>
+    <toodles-energy id="energy"></toodles-energy>    
+  </template>
+  <script>
+    class Filter extends Polymer.Element {  
+      static get is() { return 'toodles-filter' }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        this.$.calendar.addEventListener( Calendar.CHANGE, evt => this.doChange( evt ) );
+        this.$.location.addEventListener( Location.CHANGE, evt => this.doChange( evt ) );
+        this.$.duration.addEventListener( Duration.CHANGE, evt => this.doChange( evt ) );        
+        this.$.energy.addEventListener( Energy.CHANGE, evt => this.doChange( evt ) );    
+      }
+
+      static get properties() {
+        return {
+          places: Array
+        }
+      }      
+
+      show() {
+        this.style.display = 'flex';
+        TweenMax.to( this, 0.50, {
+          bottom: 0,
+          opacity: 1
+        } );
+      }
+
+      hide() {
+        TweenMax.to( this, 0.50, {
+          bottom: -235,
+          opacity: 0,
+          onComplete: function( element ) {
+            element.style.display = 'none';
+          },
+          onCompleteParams: [this]
+        } );
+      }
+
+      doChange( evt ) {
+        console.log( this.$.calendar.selected );
+        console.log( this.$.location.index );
+        console.log( this.$.duration.index );        
+        console.log( this.$.energy.index );        
+      } 
+    }
+
+    customElements.define( Filter.is, Filter );    
+  </script>
+</dom-module>

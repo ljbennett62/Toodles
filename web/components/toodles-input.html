@@ -1,0 +1,99 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+
+<dom-module id="toodles-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 72px;
+        position: relative;
+      }
+
+      input {
+        border: none;
+        font-size: 16px;
+        margin: 0;
+        outline: none;
+        padding: 0;
+        width: 100%;        
+      }
+
+      span {
+        bottom: 16px;
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;        
+      }
+
+      #divider {
+        background-color: rgba( 0, 0, 0, 0.12 );
+        bottom: 8px;
+        height: 1px;
+        left: 0;
+        position: absolute;
+        right: 0;        
+      }
+
+      #divider.invalid {
+        background-color: #F44336;        
+      }
+
+      #divider.selected {
+        background-color: #2196F3;
+        height: 2px;        
+      }
+
+      #label {
+        font-size: 12px;
+        margin: 16px 0 0 0;
+        padding: 0;
+        position: absolute;        
+      }
+
+      #label.selected {
+        color: #2196F3;  
+      }
+    </style>
+    <p id="label">[[placeholder]]</p>
+    <div id="divider"></div>
+    <span>
+      <input type="[[type]]" on-focus="onFocus" on-blur="onBlur" value="{{value}}">
+    </span>
+  </template>
+  <script>
+    class TextField extends Polymer.Element {  
+      static get is() { return 'toodles-input' }
+
+      static get properties() {
+        return {
+          placeholder: {
+            type: String,
+            value: 'Label'
+          },
+          type: {
+            type: String,
+            value: 'text'
+          },
+          value: String
+        }
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      onBlur( evt ) {
+        this.$.label.classList.remove( 'selected' );        
+        this.$.divider.classList.remove( 'selected' );
+      }
+
+      onFocus( evt ) {
+        this.$.label.classList.add( 'selected' );        
+        this.$.divider.classList.add( 'selected' );
+      }
+    }
+
+    customElements.define( TextField.is, TextField );    
+  </script>
+</dom-module>

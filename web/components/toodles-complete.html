@@ -1,0 +1,56 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+
+<dom-module id="toodles-complete">
+  <template>
+    <style>
+      :host {
+
+      }
+
+      #check {
+        background-image: url( /img/check.box.outline.black.svg );
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 24px;
+        height: 48px;
+        opacity: 0.54;
+        width: 48px;
+      }
+
+      .selected {
+        background-image: url( /img/check.box.black.svg ) !important;
+      }
+    </style>
+    <div id="check" on-click="onCheck"></div>
+  </template>
+  <script>
+    class Complete extends Polymer.Element {  
+      static get is() { return 'toodles-complete' }
+
+      static get properties() {
+        return {
+          selected: {
+            type: Boolean,
+            value: false
+          }
+        }
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      onCheck( evt ) {
+        if( this.selected ) {
+          this.$.check.classList.remove( 'selected' );
+          this.selected = false;
+        } else {
+          this.$.check.classList.add( 'selected' );
+          this.selected = true;
+        }
+      }
+    }
+
+    customElements.define( Complete.is, Complete );    
+  </script>
+</dom-module>

@@ -1,0 +1,52 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+
+<dom-module id="toodles-tags">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        flex-direction: row;
+        height: 48px;
+      }
+
+      p {
+        background-color: rgba( 0, 0, 0, 0.12 );
+        border-radius: 32px;
+        color: rgba( 0, 0, 0, 0.87 ); 
+        cursor: default;
+        font-size: 14px;
+        height: 32px;
+        line-height: 32px;
+        margin: 8px 16px 0 0;
+        padding: 0 12px 0 12px;
+      }      
+    </style>
+    <p>awesome</p>
+    <p>journey</p>    
+  </template>
+  <script>
+    class Tags extends Polymer.Element {  
+      static get is() { return 'toodles-tags' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      static get properties() {
+        return {
+          tags: String
+        }
+      }
+
+      hide() {
+        this.style.display = 'none';
+      }
+
+      show() {
+        this.style.display = 'flex';
+      }      
+    }
+
+    customElements.define( Tags.is, Tags );    
+  </script>
+</dom-module>

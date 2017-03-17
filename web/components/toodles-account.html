@@ -1,0 +1,136 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/components/toodles-check.html">
+<link rel="import" href="/components/toodles-input.html">
+
+<dom-module id="toodles-account">
+  <template>
+    <style>
+      :host {
+        align-items: center;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: center;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      button {
+        background: none;
+        background-color: #2196F3;
+        border: none;
+        border-radius: 2px;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        height: 36px;
+        margin: 18px 0 18px 0;
+        padding: 0 16px 0 16px;
+        outline: none;
+        text-transform: uppercase;
+      }
+
+      button.disabled {
+        background-color: rgba( 0, 0, 0, 0.12 );
+        color: rgba( 0, 0, 0, 0.26 );
+      }
+
+      button.loading {
+        background-image: url( /img/loading.svg );
+        background-position: 16px center;
+        background-repeat: no-repeat;
+        background-size: 20px;
+      }
+
+      .create {
+        color: #2196F3;
+        cursor: default;
+        font-size: 14px;        
+      }
+
+      .dialog {
+        background-color: white;
+        border-radius: 2px;
+        box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );    
+        display: flex;
+        flex-direction: column;
+        padding: 0 16px 16px 16px;
+        width: 268px;
+      }
+
+      .photo {
+        background-image: url( /img/account.black.svg );
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 56px;
+        margin: 16px 10px 16px 10px;
+        opacity: 0.38;
+      }
+    </style>
+    <div class="dialog">
+      <div class="photo"></div>
+      <toodles-input id="email" type="text" placeholder="Email" value="{{email}}"></toodles-input>
+      <toodles-input id="password" type="password" placeholder="Password" value="{{password}}"></toodles-input>
+      <button on-click="onSignIn">Sign In</button>
+      <toodles-check label="Stay signed in"></toodles-check>
+    </div>
+    <p class="create" on-click="onCreate">Create an account</p>
+  </template>
+  <script>
+    class Account extends Polymer.Element {  
+      static get is() { return 'toodles-account' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      static get properties() {
+        return {
+          id: String,
+          email: String,
+          password: String
+        }
+      }
+
+      hide() {
+        TweenMax.to( this, 0.50, {
+          opacity: 0,
+          onComplete: function( element ) {
+            element.style.display = 'none';
+          },
+          onCompleteParams: [this]
+        } );
+      }
+
+      show() {
+        this.style.display = 'flex';        
+        TweenMax.to( this, 0.50, {
+          opacity: 1
+        } );
+      }
+
+      onCreate( evt ) {
+        console.log( 'Create.' );
+      }
+
+      onSignIn( evt ) {
+        evt.target.classList.add( 'loading' );
+
+        this.dispatchEvent( new CustomEvent( Account.SIGN_IN, {
+          detail: {
+            email: this.email,
+            password: this.password
+          }
+        } ) );        
+      }   
+    }
+
+    Account.SIGN_IN = 'account_sign_in';
+
+    customElements.define( Account.is, Account );    
+  </script>
+</dom-module>

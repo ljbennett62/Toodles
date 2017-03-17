@@ -1,0 +1,67 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/components/toodles-item.html">
+
+<dom-module id="toodles-list">
+  <template>
+    <style>
+      :host {
+        bottom: 228px;
+        display: none;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 56px;
+        transition-duration: 0.50s;  
+        transition-property: opacity;                  
+      }
+    </style>
+    <toodles-item></toodles-item>
+  </template>
+  <script>
+    class List extends Polymer.Element {  
+      static get is() { return 'toodles-list' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      static get properties() {
+        return {
+        	data: {
+            type: Array,
+            observer: 'onData'
+          }
+        }
+      }
+
+      hide() {
+        TweenMax.to( this, 0.50, {
+          opacity: 0,
+          onComplete: function( element ) {
+            element.style.display = 'none';
+          },
+          onCompleteParams: [this]
+        } );
+      }
+
+      show() {
+        this.style.display = 'block';
+        this.style.opacity = 1;
+      }      
+
+      onData( value, old ) {
+        /*
+        for( var t = 0; t < value.length; t++ ) {
+          let item = document.createElement( 'toodles-item' );
+          item.task = value[t];
+          Polymer.dom( this ).appendChild( item );
+          // this.appendChild( item );
+          // item.attachShadow( {mode: 'open'} );
+        }
+        */
+      }
+    }
+
+    customElements.define( List.is, List );    
+  </script>
+</dom-module>

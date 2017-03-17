@@ -1,0 +1,75 @@
+#location {
+  background-color: white;
+  border-bottom: 1px solid rgba( 0, 0, 0, 0.12 );  
+  display: flex;
+  flex-direction: row;
+  height: 56px;
+  justify-content: center;
+}
+
+#location > button {
+  background: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  border: none;
+  border-radius: 2px;
+  height: 36px;
+  margin: 10px;
+  outline: none;
+  padding: 0;
+  width: 36px;  
+}
+
+#location > button.left {
+  background-image: url( ../img/arrow.left.blue.svg );
+}
+
+#location > button.left:hover {
+  background-color: #2196F3;  
+  background-image: url( ../img/arrow.left.white.svg );
+}
+
+#location > button.right {
+  background-image: url( ../img/arrow.right.blue.svg );
+}
+
+#location > button.right:hover {
+  background-color: #2196F3;  
+  background-image: url( ../img/arrow.right.white.svg );
+}
+
+#location > button.icon {
+  background-image: url( ../img/location.black.svg );
+  opacity: 0.54;
+}
+
+#location > div.list {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  height: 56px;
+  justify-content: center;  
+}
+
+#location > div.list > button {
+  background: none;
+  border: none;
+  border-top: 2px solid #FFFFFF;   
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  width: calc( 100% / 7 );  
+}
+
+#location > div.list > button.inactive {
+  display: none;
+}
+
+#location > div.list > button.selected {
+  background-color: #E3F2FD;  
+  border-top: 2px solid #2196F3; 
+  color: #2196F3; 
+}
