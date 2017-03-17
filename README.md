@@ -1,20 +1,20 @@
-#What
+# What
 
 Toodles is a basic to-do list manager that leverages IBM Blockchain as the data store.
 
-#Why
+# Why
 
 The cryptocurrency Bitcoin is well known even outside of technology spheres of influence. Underlying Bitcoin however is Blockchain - a distributed database with some very special properties. These properties make Blockchain an ideal data store for all variety of applications, not just financial records. Toodles helps developers understand Blockchain in the context of typical (CRUD) database operations they use on a daily basis.
 
-#Who
+# Who
 
 Blockchain is open source, and many corporate entities have seen the value of leveraging its unique characteristics (Blockchain for business). One implementation of Blockchain is Hyperledger Fabric, which is organized and run by the Linux Foundation. Various IBM employees are involved in Hyperledger Fabric, including the technical steering committee. IBM Blockchain is an instance of Hyperledge Fabric in the cloud - running on IBM Bluemix.
 
-#Where
+# Where
 
 Toodles runs on IBM Blockchain on IBM Bluemix.
 
-#How
+# How
 
 IBM Blockchain on IBM Bluemix provides a safe testing area, with robust tooling, for everything from prototype applications, to large scale production. 
 
@@ -22,28 +22,28 @@ A "block" is some amount of data. Functionally, Blockchain stores data as an arr
 
 Toodles has three data structures represented on the Blockchain ...
 
-- Account
--- Id
--- Email
--- Password
+* Account
+  * Id
+  * Email
+  * Password
 
-- Location
--- Id
--- AccountId
--- Name
+* Location
+  * Id
+  * AccountId
+  * Name
 
-- Task
--- Id
--- AccountId
--- Due
--- LocationId
--- Duration
--- Energy
--- Tags
--- Notes
--- Complete
--- Name
--- CreatedAt
+* Task
+  * Id
+  * AccountId
+  * Due
+  * LocationId
+  * Duration
+  * Energy
+  * Tags
+  * Notes
+  * Complete
+  * Name
+  * CreatedAt
 
 If we continue with the analogy of Blockchain as a distributed database, then "chaincode" is effectively a stored procedure. The difference here is that chaincode is written in Go, and can [arguably] have more substantial logic than a stored procedure. You might also hear the term "smart contract" which is a more business-oriented phrasing for chaincode.
 
@@ -55,18 +55,18 @@ The format of the JSON message varies slightly depending on the operation, but g
 
 ```
 {
-	"jsonrpc": "2.0",
-	"method": "invoke",
-	"params": {
-        "chaincodeID": "abc-123-xyz-456",
-        "ctorMsg": {
-          "function": "create_account",
-          "args": ["abc-123", "krhoyt@us.ibm.com", "mypassword"]
-        },
-        "secureContext": "user_1",
-        "type": 1
+  "jsonrpc": "2.0",
+  "method": "invoke",
+  "params": {
+    "chaincodeID": "abc-123-xyz-456",
+    "ctorMsg": {
+      "function": "create_account",
+      "args": ["abc-123", "krhoyt@us.ibm.com", "mypassword"]
     },
-    "id": 1        
+    "secureContext": "user_1",
+    "type": 1
+  },
+  "id": 1        
 }
 ```
 
@@ -78,7 +78,7 @@ In the case of Toodles, a web-based interface is supplied to allow users to logi
 
 > As IBM Blockchain supports CORS (cross-domain resource sharing) by default, the Web-based user interface makes requests directly against chaincode. Should you prefer a "serverless" approach, an OpenWhisk action is included in the repository. Alternatively, you might leverage Node.js (or other) server to proxy/massage data between clients and chaincode.
 
-#What Next
+# What Next
 
 The chaincode for Toodles is very specific for the application and its related data structures. It stands to reason however that those specifics could be abstracted away at the chaincode such that the arguments would specify which data model to edit, how, and with what values.  This would simplify the chaincode substantially, and make future database-oriented deployments as simple as using the exact same chaincode.
 
