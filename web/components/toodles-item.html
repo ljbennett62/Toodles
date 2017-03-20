@@ -13,7 +13,7 @@
         box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );  
         display: flex;
         flex-direction: column;
-        margin: 16px 88px 0 16px;        
+        margin: 0 0 16px 0;
       }
 
       input {
@@ -26,6 +26,16 @@
         margin: 0;
         outline: 0;
         padding: 0;        
+      }
+
+      textarea {
+        border: none;
+        color: rgba( 0, 0, 0, 0.87 );
+        flex-grow: 1; 
+        height: 96px;
+        outline: none;
+        font-size: 14px;
+        padding-top: 15px;
       }
 
       #duration {
@@ -41,6 +51,7 @@
       }
 
       .details {
+        display: none;
         flex-direction: column;        
       }
 
@@ -54,6 +65,16 @@
         margin: 0 16px 0 0;
         outline: none;
         padding: 0;        
+      }
+
+      .notes {
+        background-image: url( /img/note.black.svg );
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 24px;
+        height: 48px;
+        opacity: 0.54;
+        width: 48px;        
       }
 
       .row {
@@ -79,15 +100,15 @@
       }
     </style>
     <div class="summary">
-      <toodles-complete></toodles-complete>
-      <input class="label" value="Chain All The Things">
-      <toodles-tags></toodles-tags>
-      <toodles-remain></toodles-remain>
+      <toodles-complete id="complete" on-complete_change="onCompleteChange"></toodles-complete>
+      <input id="label" class="label" value="[[task.name]]" on-focus="onLabelFocus">
+      <toodles-tags id="summary_tags" on-tags_change="onTagsChange"></toodles-tags>
+      <toodles-remain id="remain"></toodles-remain>
     </div>
-    <div class="details">
+    <div id="details" class="details">
       <div class="row">
         <div class="tags"></div>
-        <toodles-tags></toodles-tags>
+        <toodles-tags id="detail_tags" on-tags_change="onTagsChange" editable></toodles-tags>
         <input>
       </div>
       <div class="row">
@@ -109,7 +130,9 @@
           selected="2">
         </toodles-combo>        
       </div>
-      <div class="row" style="height: 96px;">        
+      <div class="row">
+        <div class="notes"></div>
+        <textarea id="notes" placeholder="Notes"></textarea>
       </div>
     </div>
   </template>
@@ -119,14 +142,105 @@
 
       connectedCallback() {
         super.connectedCallback();
+        this.opened = false;
       }
 
       static get properties() {
         return {
-        	task: Object
+        	task: {
+            type: Object,
+            observer: 'onTask'
+          }
         }
       }
+
+      close() {
+        this.$.label.blur();
+        this.$.details.style.display = 'none';
+        this.$.summary_tags.show();
+
+        if( this.task.complete ) {
+          this.style.opacity = 0.38;
+          this.$.remain.hide();
+        } else {
+          this.style.opacity = 1;
+          this.$.remain.show();
+        }
+
+        this.opened = false;
+      }
+
+      open() {
+        this.style.opacity = 1;
+        this.$.summary_tags.hide();
+        this.$.remain.hide();
+        this.$.details.style.display = 'flex';        
+
+        this.opened = true;
+      }
+
+      onCompleteChange( evt ) {
+        this.task.complete = evt.detail.selected;
+
+        if( this.task.complete ) {
+          if( !this.opened ) {
+            this.style.opacity = 0.38;
+            this.$.remain.hide();
+          }
+        } else {
+          this.style.opacity = 1;
+
+          if( !this.opened ) {
+            this.$.remain.show();
+          }
+        }        
+      }
+
+      onLabelFocus( evt ) {
+        this.open();
+        this.dispatchEvent( new CustomEvent( Item.OPEN, null ) );
+      }
+
+      onTagsChange( evt ) {
+        console.log( 'Tags changed.' );
+        console.log( evt.detail.tags );
+      }
+
+      onTask( value, old ) {
+        // Complete
+        this.$.complete.selected = this.task.complete;
+
+        if( this.task.complete ) {
+          this.style.opacity = 0.38;
+          this.$.remain.hide();
+        } else {
+          this.style.opacity = 1;
+          this.$.remain.show();
+        }
+
+        // Name set through binding
+
+        // Tags (summary and editable detail list)
+        this.$.summary_tags.list = this.task.tags.split( ',' );
+        this.$.detail_tags.list = this.task.tags.split( ',' );
+
+        // Time until due
+        if( this.task.due > 0 ) {
+          this.$.remain.due = this.task.due;
+        } else {
+          this.$.remain.hide();
+        }
+
+        // Location
+        // Duration
+        // Energy
+
+        // Notes
+        this.$.notes.value = this.task.notes;
+      }
     }
+
+    Item.OPEN = 'item_open';
 
     customElements.define( Item.is, Item );    
   </script>

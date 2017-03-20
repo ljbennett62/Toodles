@@ -4,24 +4,20 @@
   <template>
     <style>
       :host {
-
-      }
-
-      #check {
         background-image: url( /img/check.box.outline.black.svg );
         background-position: center;
         background-repeat: no-repeat;
         background-size: 24px;
+        cursor: default;
         height: 48px;
         opacity: 0.54;
         width: 48px;
       }
 
-      .selected {
+      :host( .selected ) {
         background-image: url( /img/check.box.black.svg ) !important;
       }
     </style>
-    <div id="check" on-click="onCheck"></div>
   </template>
   <script>
     class Complete extends Polymer.Element {  
@@ -31,25 +27,37 @@
         return {
           selected: {
             type: Boolean,
-            value: false
+            value: false,
+            observer: 'onValue'
           }
         }
       }
 
       connectedCallback() {
         super.connectedCallback();
+        this.addEventListener( 'click', evt => this.doCheck( evt ) );
       }
 
-      onCheck( evt ) {
+      doCheck( evt ) {
+        this.selected = !this.selected;
+
+        this.dispatchEvent( new CustomEvent( Complete.CHANGE, {
+          detail: {
+            selected: this.selected
+          }
+        } ) );                 
+      }
+
+      onValue( value, old ) {
         if( this.selected ) {
-          this.$.check.classList.remove( 'selected' );
-          this.selected = false;
+          this.classList.add( 'selected' );
         } else {
-          this.$.check.classList.add( 'selected' );
-          this.selected = true;
-        }
+          this.classList.remove( 'selected' );          
+        }        
       }
     }
+
+    Complete.CHANGE = 'complete_change';
 
     customElements.define( Complete.is, Complete );    
   </script>

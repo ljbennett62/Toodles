@@ -8,6 +8,8 @@
         bottom: 228px;
         display: none;
         left: 0;
+        overflow: auto;
+        padding: 16px 88px 0 16px;
         position: absolute;
         right: 0;
         top: 56px;
@@ -15,7 +17,7 @@
         transition-property: opacity;                  
       }
     </style>
-    <toodles-item></toodles-item>
+    <slot></slot>
   </template>
   <script>
     class List extends Polymer.Element {  
@@ -23,6 +25,7 @@
 
       connectedCallback() {
         super.connectedCallback();
+        this.addEventListener( 'click', evt => this.doListClick( evt ) );
       }
 
       static get properties() {
@@ -49,16 +52,29 @@
         this.style.opacity = 1;
       }      
 
-      onData( value, old ) {
-        /*
-        for( var t = 0; t < value.length; t++ ) {
-          let item = document.createElement( 'toodles-item' );
-          item.task = value[t];
-          Polymer.dom( this ).appendChild( item );
-          // this.appendChild( item );
-          // item.attachShadow( {mode: 'open'} );
+      doItemOpen( evt ) {
+        for( let i = 0; i < this.children.length; i++ ) {
+          if( this.children[i] != evt.target ) {
+            this.children[i].close();
+          }
         }
-        */
+      }
+
+      doListClick( evt ) {
+        if( evt.target == this ) {
+          for( let i = 0; i < this.children.length; i++ ) {
+            this.children[i].close();
+          }
+        }
+      }
+
+      onData( value, old ) {
+        for( var i = 0; i < this.data.length; i++ ) {
+          let item = document.createElement( 'toodles-item' );
+          item.addEventListener( Item.OPEN, evt => this.doItemOpen( evt ) );
+          item.task = value[i];
+          this.appendChild( item );
+        }
       }
     }
 
