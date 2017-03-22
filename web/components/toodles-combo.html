@@ -1,14 +1,24 @@
 <link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/components/toodles-menu.html">
 
 <dom-module id="toodles-combo">
   <template>
     <style>
       :host {
+        cursor: default;
         display: flex;
         flex-direction: row;
         flex-basis: 0;
         flex-grow: 1;
         height: 48px;
+      }
+
+      p {
+        flex-grow: 1;
+        font-size: 14px;
+        line-height: 48px;
+        margin: 0;
+        padding: 0;
       }
 
       .icon {
@@ -20,15 +30,19 @@
         width: 48px;
       }
 
-      p {
-        font-size: 14px;
-        line-height: 48px;
-        margin: 0;
-        padding: 0;
+      .tilt {
+        background-image: url( /img/arrow.down.black.svg );
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 24px;
+        height: 48px;
+        opacity: 0.54;
+        width: 48px;
       }
     </style>
     <div class="icon" style$="background-image: url( [[icon]] );"></div>
-    <p class="current">Home</p>
+    <p id="label" class="current"></p>
+    <div class="tilt"></div>
   </template>
   <script>
     class Combo extends Polymer.Element {  
@@ -36,16 +50,107 @@
 
       connectedCallback() {
         super.connectedCallback();
+
+        this._items = null;
+
+        this.addEventListener( 'click', evt => this.doClick( evt ) );
       }
 
       static get properties() {
         return {
-        	selected: Number,
-          items: String,
           icon: String
         }
       }
+
+      set items( value ) {
+        this._items = value;
+      }
+
+      get items() {
+        return this._items;
+      }
+
+      set selected( value ) {
+        for( let i = 0; i < this._items.length; i++ ) {
+          if( this._items[i].id == value ) {
+            this.$.label.setAttribute( 'data-id', this._items[i].id );
+            this.$.label.innerHTML = this._items[i].name;
+            break;
+          }
+        }
+      }
+
+      get selected() {
+        for( let i = 0; i < this._items.length; i++ ) {
+          if( this._items[i].id == this.$.label.getAttribute( 'data-id' ) ) {
+            return this._items[i];
+          }
+        }
+      }
+
+      // https://www.kirupa.com/html5/get_element_position_using_javascript.htm
+      getPosition( element ) {
+        let xPos = 0;
+        let yPos = 0;
+ 
+        while( element ) {
+          if( element.tagName == 'BODY' ) {
+            let xScroll = element.scrollLeft || document.documentElement.scrollLeft;
+            let yScroll = element.scrollTop || document.documentElement.scrollTop;
+ 
+            xPos += ( element.offsetLeft - xScroll + element.clientLeft);
+            yPos += ( element.offsetTop - yScroll + element.clientTop );
+          } else {
+            xPos += ( element.offsetLeft - element.scrollLeft + element.clientLeft );
+            yPos += ( element.offsetTop - element.scrollTop + element.clientTop );
+          }
+ 
+          element = element.offsetParent;
+        }
+  
+        return {
+          x: xPos,
+          y: yPos
+        };
+      }
+
+      doClick( evt ) {
+        let menu = document.querySelector( 'toodles-menu' );
+        let position = this.getPosition( this );
+
+        if( menu ) {
+          menu.remove();
+        }
+
+        menu = document.createElement( 'toodles-menu' );
+        menu.addEventListener( Menu.SELECT, evt => this.doMenu( evt ) );
+        menu.style.width = this.clientWidth;
+        menu.style.left = position.x + 'px';
+        // TODO: Better positioning
+        // TODO: Better dismissal
+        // Menus have 8 pixels at the top
+        menu.style.top = ( position.y - 8 ) + 'px';
+        menu.items = this.items;
+        document.body.appendChild( menu );
+      }
+
+      doMenu( evt ) {
+        if( this.selected.id != evt.detail.id ) {
+          this.selected = evt.detail.id;
+
+          this.dispatchEvent( new CustomEvent( Combo.CHANGE, {
+            detail: {
+              item: this.selected
+            }
+          } ) );                   
+        }
+
+        // TODO: Fully destroy reference
+        evt.target.remove();
+      }
     }
+
+    Combo.CHANGE = 'combo_change';
 
     customElements.define( Combo.is, Combo );    
   </script>

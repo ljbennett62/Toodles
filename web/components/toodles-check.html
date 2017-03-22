@@ -35,27 +35,25 @@
       }
     </style>
     <div id="check" on-click="onCheck"></div>
-    <p class="label" on-click="onCheck">[[label]]</p>
+    <p id="label" class="label" on-click="onCheck"></p>
   </template>
   <script>
     class CheckBox extends Polymer.Element {  
       static get is() { return 'toodles-check' }
 
-      static get properties() {
-        return {
-          label: {
-            type: String,
-            value: 'Label'
-          },
-          selected: {
-            type: Boolean,
-            value: false
-          }
-        }
-      }
-
       connectedCallback() {
         super.connectedCallback();
+        
+        this.selected = false;
+        this.label = 'Label';
+      }
+
+      set label( value ) {
+        this.$.label.innerHTML = value;
+      }
+
+      get label() {
+        return this.$.label.innerHTML;
       }
 
       onCheck( evt ) {

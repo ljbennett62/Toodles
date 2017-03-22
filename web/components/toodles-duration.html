@@ -70,26 +70,23 @@
 
       connectedCallback() {
         super.connectedCallback();
+        this.index = 0;
       }
 
-      static get properties() {
-        return {
-          index: {
-            observer: 'onIndex',
-            type: Number,
-            value: 0
+      set index( value ) {
+        for( let c = 0; c < this.$.list.children.length; c++ ) {
+          if( c == value ) {
+            this.$.list.children[c].classList.add( 'selected' );
+          } else {
+            this.$.list.children[c].classList.remove( 'selected' );
           }
         }
       }
 
-      onIndex( value, old ) {
-        let buttons = this.root.querySelectorAll( 'button' );
-
-        for( let b = 0; b < buttons.length; b++ ) {
-          if( b == value ) {
-            buttons[b].classList.add( 'selected' );
-          } else {
-            buttons[b].classList.remove( 'selected' );
+      get index() {
+        for( let c = 0; c < this.$.list.children.length; c++ ) {
+          if( this.$.list.children[c].classList.contains( 'selected' ) ) {
+            return c;
           }
         }
       }

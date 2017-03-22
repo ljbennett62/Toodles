@@ -2,6 +2,7 @@
 <link rel="import" href="/components/toodles-complete.html">
 <link rel="import" href="/components/toodles-tags.html">
 <link rel="import" href="/components/toodles-remain.html">
+<link rel="import" href="/components/toodles-due.html">
 <link rel="import" href="/components/toodles-combo.html">
 
 <dom-module id="toodles-item">
@@ -101,38 +102,42 @@
     </style>
     <div class="summary">
       <toodles-complete id="complete" on-complete_change="onCompleteChange"></toodles-complete>
-      <input id="label" class="label" value="[[task.name]]" on-focus="onLabelFocus">
+      <input 
+        id="label" 
+        class="label" 
+        on-focus="onLabelFocus" 
+        on-blur="onLabelBlur" 
+        on-keypress="onLabelKey">
       <toodles-tags id="summary_tags" on-tags_change="onTagsChange"></toodles-tags>
       <toodles-remain id="remain"></toodles-remain>
     </div>
     <div id="details" class="details">
       <div class="row">
         <div class="tags"></div>
-        <toodles-tags id="detail_tags" on-tags_change="onTagsChange" editable></toodles-tags>
-        <input>
+        <toodles-tags id="detail_tags" on-tags_change="onTagsChange"></toodles-tags>
+        <input id="add_tag" on-keypress="onTagsKey">
       </div>
       <div class="row">
-        <toodles-combo icon="/img/event.black.svg"></toodles-combo>
+        <toodles-due id="due" on-due_change="onDue"></toodles-due>
         <toodles-combo 
-          id="location" 
-          icon="/img/location.black.svg">
+          id="location"          
+          icon="/img/location.black.svg"
+          on-combo_change="onLocation">
         </toodles-combo>
         <toodles-combo 
           id="duration" 
           icon="/img/duration.black.svg"
-          items="Any,< 30 mins.,30 - 60 mins.,1 - 2 hrs.,> 4 hrs."
-          selected="4">    
+          on-combo_change="onDuration">    
         </toodles-combo>
         <toodles-combo 
           id="energy" 
           icon="/img/energy.black.svg" 
-          items="Any,Low,Normal,High"
-          selected="2">
+          on-combo_change="onEnergy">
         </toodles-combo>        
       </div>
       <div class="row">
         <div class="notes"></div>
-        <textarea id="notes" placeholder="Notes"></textarea>
+        <textarea id="notes" placeholder="Notes" on-blur="onNotes"></textarea>
       </div>
     </div>
   </template>
@@ -142,16 +147,61 @@
 
       connectedCallback() {
         super.connectedCallback();
+        this._task = null;
         this.opened = false;
+        this.$.detail_tags.editable = true;
       }
 
-      static get properties() {
-        return {
-        	task: {
-            type: Object,
-            observer: 'onTask'
-          }
+      set task( value ) {
+        this._task = Object.assign( {}, value );
+
+        // Completed check box
+        this.$.complete.selected = this._task.complete;
+
+        // Adjust opacity for completed
+        if( this._task.complete ) {
+          this.style.opacity = 0.38;
+          this.$.remain.hide();
+        } else {
+          this.style.opacity = 1;
+          this.$.remain.show();
         }
+
+        // Name
+        this.$.label.value = this._task.name;
+
+        // Tags (summary and editable detail list)
+        this.$.summary_tags.list = this._task.tags;
+        this.$.detail_tags.list = this._task.tags;
+
+        // Time until due
+        if( this._task.due > 0 ) {
+          this.$.remain.due = this._task.due;
+        } else {
+          this.$.remain.hide();
+        }
+
+        // Due date proper
+        this.$.due.value = this._task.due;        
+
+        // Location
+        this.$.location.items = model.locations;
+        this.$.location.selected = this._task.location;                
+        
+        // Duration
+        this.$.duration.items = Model.DURATION;
+        this.$.duration.selected = this._task.duration;
+
+        // Energy
+        this.$.energy.items = Model.ENERGY;
+        this.$.energy.selected = this._task.energy;
+
+        // Notes
+        this.$.notes.value = this._task.notes;        
+      }
+
+      get task() {
+        return this._task;
       }
 
       close() {
@@ -164,7 +214,10 @@
           this.$.remain.hide();
         } else {
           this.style.opacity = 1;
-          this.$.remain.show();
+
+          if( this.task.due > 0 ) {
+            this.$.remain.show();
+          }
         }
 
         this.opened = false;
@@ -181,6 +234,7 @@
 
       onCompleteChange( evt ) {
         this.task.complete = evt.detail.selected;
+        model.taskEdit( this.task );
 
         if( this.task.complete ) {
           if( !this.opened ) {
@@ -196,48 +250,70 @@
         }        
       }
 
+      onLabelBlur( evt ) {
+        if( this.$.label.value.trim() != this.task.name.trim() ) {
+          this.task.name = this.$.label.value.trim();
+          model.taskEdit( this.task );
+        }
+      }
+
       onLabelFocus( evt ) {
         this.open();
         this.dispatchEvent( new CustomEvent( Item.OPEN, null ) );
       }
 
+      onLabelKey( evt ) {
+        if( evt.keyCode == 13 ) {
+          if( this.$.label.value.trim() != this.task.name.trim() ) {
+            this.task.name = this.$.label.value.trim();
+            model.taskEdit( this.task );
+          }
+        }
+      }
+
       onTagsChange( evt ) {
         console.log( 'Tags changed.' );
         console.log( evt.detail.tags );
+        this.task.tags = evt.detail.tags;
+        this.$.summary_tags.list = this.task.tags;
       }
 
-      onTask( value, old ) {
-        // Complete
-        this.$.complete.selected = this.task.complete;
-
-        if( this.task.complete ) {
-          this.style.opacity = 0.38;
-          this.$.remain.hide();
-        } else {
-          this.style.opacity = 1;
-          this.$.remain.show();
+      onTagsKey( evt ) {
+        if( evt.keyCode == 13 ) {
+          this.task.tags = this.task.tags + ',' + this.$.add_tag.value.trim();
+          this.$.summary_tags.list = this.task.tags;          
+          this.$.detail_tags.list = this.task.tags;
+          // TODO: Should not have to call this 
+          this.$.detail_tags.editable = true;
+          this.$.add_tag.value = '';
         }
-
-        // Name set through binding
-
-        // Tags (summary and editable detail list)
-        this.$.summary_tags.list = this.task.tags.split( ',' );
-        this.$.detail_tags.list = this.task.tags.split( ',' );
-
-        // Time until due
-        if( this.task.due > 0 ) {
-          this.$.remain.due = this.task.due;
-        } else {
-          this.$.remain.hide();
-        }
-
-        // Location
-        // Duration
-        // Energy
-
-        // Notes
-        this.$.notes.value = this.task.notes;
       }
+
+      onDue( evt ) {
+        this.task.due = evt.detail.due;
+        this.$.remain.due = this.task.due;
+        model.taskEdit( this.task );        
+      }
+
+      onDuration( evt ) {
+        this.task.duration = parseInt( evt.detail.item.id );
+        model.taskEdit( this.task );        
+      }
+
+      onEnergy( evt ) {
+        this.task.energy = parseInt( evt.detail.item.id );
+        model.taskEdit( this.task );        
+      }
+
+      onLocation( evt ) {
+        this.task.location = evt.detail.item.id;
+        model.taskEdit( this.task );        
+      }      
+
+      onNotes( evt ) {
+        this.task.notes = this.$.notes.value;
+        model.taskEdit( this.task );        
+      }            
     }
 
     Item.OPEN = 'item_open';

@@ -19,7 +19,7 @@
       }
     </style>
     <toodles-calendar id="calendar"></toodles-calendar>
-    <toodles-location id="location" places="{{places}}"></toodles-location>
+    <toodles-location id="location"></toodles-location>
     <toodles-duration id="duration"></toodles-duration>
     <toodles-energy id="energy"></toodles-energy>    
   </template>
@@ -30,17 +30,53 @@
       connectedCallback() {
         super.connectedCallback();
 
+        this.places = [];
+
         this.$.calendar.addEventListener( Calendar.CHANGE, evt => this.doChange( evt ) );
         this.$.location.addEventListener( Location.CHANGE, evt => this.doChange( evt ) );
         this.$.duration.addEventListener( Duration.CHANGE, evt => this.doChange( evt ) );        
         this.$.energy.addEventListener( Energy.CHANGE, evt => this.doChange( evt ) );    
       }
 
-      static get properties() {
-        return {
-          places: Array
-        }
+      set calendar( value ) {
+        this.$.calendar.selected = value;
+      }
+
+      get calendar() {
+        return this.$.calendar.selected;
+      }
+
+      set duration( value ) {
+        this.$.duration.index = value;
+      }
+
+      get duration() {
+        return this.$.duration.index;
+      }
+
+      set energy( value ) {
+        this.$.energy.index = value;
+      }
+
+      get energy() {
+        return this.$.energy.index;
       }      
+
+      set location( value ) {
+        this.$.location.selected = value;
+      }
+
+      get location() {
+        return this.$.location.selected;
+      }
+
+      set places( value ) {
+        this.$.location.places = value;
+      }
+
+      get places() {
+        return this.$.location.places;
+      }
 
       show() {
         this.style.display = 'flex';
@@ -63,7 +99,7 @@
 
       doChange( evt ) {
         console.log( this.$.calendar.selected );
-        console.log( this.$.location.index );
+        console.log( this.$.location.selected );
         console.log( this.$.duration.index );        
         console.log( this.$.energy.index );        
       } 

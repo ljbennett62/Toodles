@@ -65,21 +65,28 @@
       connectedCallback() {
         super.connectedCallback();
 
-        this.days = this.root.querySelectorAll( 'toodles-day' );
+        this._selected = null;
 
         this.start = new Date();
         this.start.setDate( this.start.getDate() - 3 );
 
+        this.days = this.root.querySelectorAll( 'toodles-day' );
+
         this.roll();
       }
 
-      static get properties() {
-        return {
-          selected: {
-            type: Date,
-            value: null
-          }
+      set selected( value ) {
+        if( value ) {
+          this._selected = new Date( value.getTime() );
+        } else {
+          this._selected = null;
         }
+        
+        this.roll();
+      }
+
+      get selected() {
+        return this._selected;
       }
 
       roll() {

@@ -18,20 +18,58 @@
 
       connectedCallback() {
         super.connectedCallback();
+        this._editable = false;
+        this.doRemove = this.doRemove.bind( this );        
       }
 
-      static get properties() {
-        return {
-          list: {
-            type: Array,
-            observer: 'onList',
-            value: []
-          }, 
-          editable: {
-            type: Boolean,
-            value: false
+      set editable( value ) {
+        this._editable = value;
+
+        for( var c = 0; c < this.children.length; c++ ) {
+          this.children[c].editable = this._editable;
+        }
+      }
+
+      get editable() {
+        return this._editable;
+      }
+
+      set list( value ) {
+        // Remove previous
+        while( this.children.length > 0 ) {
+          this.children[0].removeEventListener( Chip.REMOVE, this.doRemove );          
+          this.children[0].remove();
+        }
+
+        if( value.length > 0 ) {
+          let parts = value.split( ',' );
+          parts.sort();
+
+          // Build list
+          for( let p = 0; p < parts.length; p++ ) {
+            let chip = document.createElement( 'toodles-chip' );
+            chip.addEventListener( Chip.REMOVE, this.doRemove );
+
+            console.log( this.editable );
+
+            if( this.editable ) {
+              chip.setAttribute( 'editable', this.editable );
+            }
+
+            chip.label = parts[p];
+            this.appendChild( chip );
           }
         }
+      }
+
+      get list() {
+        let result = '';
+
+        for( var c = 0; c < this.children.length; c++ ) {
+          result = result + this.children[c].label + ',';
+        }
+
+        return result.substring( 0, result.length - 1 );
       }
 
       doRemove( evt ) {
@@ -49,26 +87,6 @@
             tags: this.list
           }
         } ) );          
-      }
-
-      onList( value, old ) {
-        // Remove previous
-        while( this.children.length > 0 ) {
-          this.children[0].remove();
-        }
-
-        // Build list
-        for( let t = 0; t < this.list.length; t++ ) {
-          let chip = document.createElement( 'toodles-chip' );
-          chip.addEventListener( Chip.REMOVE, evt => this.doRemove( evt ) );
-
-          if( this.editable ) {
-            chip.setAttribute( 'editable', this.editable );
-          }
-
-          chip.label = this.list[t];
-          this.appendChild( chip );
-        }
       }
 
       hide() {

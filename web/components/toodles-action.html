@@ -11,8 +11,6 @@
         opacity: 0;
         right: 16px;
         position: absolute;
-        transition-duration: 0.50s;  
-        transition-property: opacity;          
       }
 
       #compose {
@@ -95,7 +93,7 @@
       }
 
       onTask( evt ) {
-        console.log( 'Task.' );
+        this.dispatchEvent( new CustomEvent( Action.CREATE_TASK, null ) );          
       }
     }
 

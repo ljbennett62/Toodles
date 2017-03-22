@@ -100,25 +100,34 @@
         // http://stackoverflow.com/questions/30446622/es6-acces-to-this-with-addeventlistener-applied-on-method
         this.doPage = this.doPage.bind( this );
         this.doPlace = this.doPlace.bind( this );
+
+        this.index = 0;
+        this.page = 0; 
+        this._places = [];
       }
 
-      static get properties() {
-        return {
-          index: {
-            type: Number,
-            value: 0
-          },
-          page: {
-            type: Number,
-            value: 0
-          },
-          places: {
-            type: Array,
-            value: [],
-            observer: 'onPlaces'
+      set places( value ) {
+        this._places = value;
+        this.update();
+      }
+
+      get places() {
+        return this._places;
+      }
+
+      get selected() {
+        return this._places[this.index];
+      }
+
+      set selected( value ) {
+        for( let p = 0; p < this._places.length; p++ ) {
+          if( this._places[p].id == value.id ) {
+            this.index = p;
+            this.update();
+            break;
           }
         }
-      }      
+      }
 
       update() {
         // Reset buttons
@@ -176,10 +185,6 @@
             }
           }
         }
-      }
-
-      onPlaces( value, old ) {
-        this.update();
       }
 
       doPage( evt ) {

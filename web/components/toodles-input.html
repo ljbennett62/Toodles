@@ -55,35 +55,42 @@
         color: #2196F3;  
       }
     </style>
-    <p id="label">[[placeholder]]</p>
+    <p id="label"></p>
     <div id="divider"></div>
     <span>
-      <input type="[[type]]" on-focus="onFocus" on-blur="onBlur" value="{{value}}">
+      <input id="field" on-focus="onFocus" on-blur="onBlur">
     </span>
   </template>
   <script>
     class TextField extends Polymer.Element {  
       static get is() { return 'toodles-input' }
 
-      static get properties() {
-        return {
-          placeholder: {
-            type: String,
-            value: 'Label'
-          },
-          type: {
-            type: String,
-            value: 'text'
-          },
-          value: String
-        }
-      }
-
       connectedCallback() {
         super.connectedCallback();
+
+        this.placeholder = 'Label';
+        this.type = 'text';
+        this.content = null;
+      }
+
+      set placeholder( value ) {
+        this.$.label.innerHTML = value;
+      }
+
+      set type( value ) {
+        this.$.field.type = value;
+      }
+
+      set value( content ) {
+        this.$.field.value = content;
+      }
+
+      get value() {
+        return this.$.field.value;
       }
 
       onBlur( evt ) {
+        console.log( this.value );
         this.$.label.classList.remove( 'selected' );        
         this.$.divider.classList.remove( 'selected' );
       }

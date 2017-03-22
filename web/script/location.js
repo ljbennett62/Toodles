@@ -1,4 +1,4 @@
-class Task extends Blockchain {
+class Location extends Blockchain {
 
   constructor() {
     super();
@@ -9,7 +9,7 @@ class Task extends Blockchain {
     this.xhr.addEventListener( 'load', this.doBrowse );
     this.request( {
       method: Blockchain.QUERY,
-      operation: Task.BROWSE,
+      operation: Location.BROWSE,
       values: [account]
     } );
   }
@@ -18,11 +18,11 @@ class Task extends Blockchain {
     let data = JSON.parse( this.xhr.responseText );
     let result = JSON.parse( data.result.message );
 
-    this.emit( Task.BROWSE, result );
+    this.emit( Location.BROWSE, result );
 
     this.xhr.removeEventListener( 'load', this.doBrowse );
   }
 
 }
 
-Task.BROWSE = 'task_browse';
+Location.BROWSE = 'location_browse';

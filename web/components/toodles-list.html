@@ -13,8 +13,6 @@
         position: absolute;
         right: 0;
         top: 56px;
-        transition-duration: 0.50s;  
-        transition-property: opacity;                  
       }
     </style>
     <slot></slot>
@@ -28,13 +26,35 @@
         this.addEventListener( 'click', evt => this.doListClick( evt ) );
       }
 
-      static get properties() {
-        return {
-        	data: {
-            type: Array,
-            observer: 'onData'
-          }
+      set data( value ) {
+        while( this.children.length > 0 ) {
+          this.children[0].remove();
         }
+
+        for( var v = 0; v < value.length; v++ ) {
+          this.create( value[v] );
+        }
+      }
+
+      get data() {
+        let result = [];
+
+        for( var c = 0; c < this.children.length; c++ ) {
+          result.push( this.children[c].task );
+        }
+
+        return result;
+      }
+
+      add( task ) {
+        this.create( task );
+      }
+
+      create( task ) {
+        let item = document.createElement( 'toodles-item' );
+        item.addEventListener( Item.OPEN, evt => this.doItemOpen( evt ) );
+        this.appendChild( item );
+        item.task = task;          
       }
 
       hide() {
@@ -49,7 +69,9 @@
 
       show() {
         this.style.display = 'block';
-        this.style.opacity = 1;
+        TweenMax.to( this, 0.50, {
+          opacity: 1
+        } );
       }      
 
       doItemOpen( evt ) {
@@ -65,15 +87,6 @@
           for( let i = 0; i < this.children.length; i++ ) {
             this.children[i].close();
           }
-        }
-      }
-
-      onData( value, old ) {
-        for( var i = 0; i < this.data.length; i++ ) {
-          let item = document.createElement( 'toodles-item' );
-          item.addEventListener( Item.OPEN, evt => this.doItemOpen( evt ) );
-          item.task = value[i];
-          this.appendChild( item );
         }
       }
     }

@@ -23,19 +23,24 @@
     class Complete extends Polymer.Element {  
       static get is() { return 'toodles-complete' }
 
-      static get properties() {
-        return {
-          selected: {
-            type: Boolean,
-            value: false,
-            observer: 'onValue'
-          }
+      connectedCallback() {
+        super.connectedCallback();
+
+        this.selected = false;
+
+        this.addEventListener( 'click', evt => this.doCheck( evt ) );
+      }
+
+      set selected( value ) {
+        if( value ) {
+          this.classList.add( 'selected' );
+        } else {
+          this.classList.remove( 'selected' );
         }
       }
 
-      connectedCallback() {
-        super.connectedCallback();
-        this.addEventListener( 'click', evt => this.doCheck( evt ) );
+      get selected() {
+        return this.classList.contains( 'selected' );
       }
 
       doCheck( evt ) {
@@ -46,14 +51,6 @@
             selected: this.selected
           }
         } ) );                 
-      }
-
-      onValue( value, old ) {
-        if( this.selected ) {
-          this.classList.add( 'selected' );
-        } else {
-          this.classList.remove( 'selected' );          
-        }        
       }
     }
 

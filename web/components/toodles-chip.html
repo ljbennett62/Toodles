@@ -58,7 +58,7 @@
         color: white;
       }    
     </style>
-    <p id="label">[[label]]</p>
+    <p id="label"></p>
     <button id="button" on-mouseover="onOver" on-mouseout="onOut" on-click="onClick"></button>
   </template>
   <script>
@@ -67,24 +67,29 @@
 
       connectedCallback() {
         super.connectedCallback();
+        this.editable = false;
+      }
 
-        if( !this.editable ) {
+      set editable( value ) {
+        if( value ) {
+          this.$.button.style.display = 'block';
+          this.classList.remove( 'view' );          
+        } else {
           this.$.button.style.display = 'none';
           this.classList.add( 'view' );
-        } else {
-          this.$.button.style.display = 'block';
-          this.classList.remove( 'view' );
         }
       }
 
-      static get properties() {
-        return {
-          label: String,
-          editable: {
-            type: Boolean,
-            value: false
-          }
-        }
+      get editable() {
+        return this.$.button.classList.contains( 'view' );
+      }
+
+      set label( value ) {
+        this.$.label.innerHTML = value;
+      }
+
+      get label() {
+        return this.$.label.innerHTML;
       }
 
       onClick( evt ) {

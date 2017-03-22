@@ -88,7 +88,11 @@ class Test {
 
 }
 
-Test.WHISK = 'https://openwhisk.ng.bluemix.net/api/v1/experimental/web/krhoyt@us.ibm.com_dev/blockchain/command.json/body';
+// Endpoint for OpenWhisk action
+// Test.WHISK = 'https://openwhisk.ng.bluemix.net/api/v1/experimental/web/krhoyt@us.ibm.com_dev/blockchain/command.json/body';
+
+// Direct to IBM Blockchain
+// CORS-enabled
 Test.URL = 'https://ba5d025f326946a1a17a37c120fd233c-vp0.us.blockchain.ibm.com:5002/chaincode';
 
 let app = new Test();

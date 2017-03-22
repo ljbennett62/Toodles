@@ -78,9 +78,11 @@
       }
 
       onExit( evt ) {
-        console.log( 'Exit.' );
+        this.dispatchEvent( new CustomEvent( Toolbar.EXIT, null ) );                  
       }
     }
+
+    Toolbar.EXIT = 'toolbar_exit';
 
     customElements.define( Toolbar.is, Toolbar );    
   </script>
