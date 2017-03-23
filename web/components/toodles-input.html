@@ -58,7 +58,7 @@
     <p id="label"></p>
     <div id="divider"></div>
     <span>
-      <input id="field" on-focus="onFocus" on-blur="onBlur">
+      <input id="field" on-focus="onFocus" on-blur="onBlur" on-keypress="onKey">
     </span>
   </template>
   <script>
@@ -71,14 +71,32 @@
         this.placeholder = 'Label';
         this.type = 'text';
         this.content = null;
+
+        this.setAttribute( 'data-return', false );
       }
 
       set placeholder( value ) {
         this.$.label.innerHTML = value;
       }
 
+      get placeholder() {
+        return this.$.label.innerHTML.trim();
+      }
+
+      set return( value ) {
+        this.setAttribute( 'data-return', value );
+      }
+
+      get return() {
+        return this.getAttribute( 'data-return' ) == 'true' ? true : false;
+      }
+ 
       set type( value ) {
         this.$.field.type = value;
+      }
+
+      get type() {
+        return this.$.field.type;
       }
 
       set value( content ) {
@@ -90,7 +108,6 @@
       }
 
       onBlur( evt ) {
-        console.log( this.value );
         this.$.label.classList.remove( 'selected' );        
         this.$.divider.classList.remove( 'selected' );
       }
@@ -99,7 +116,19 @@
         this.$.label.classList.add( 'selected' );        
         this.$.divider.classList.add( 'selected' );
       }
+
+      onKey( evt ) {
+        if( evt.keyCode == 13 && this.return ) {
+          this.dispatchEvent( new CustomEvent( TextField.ENTER, {
+            detail: {
+              value: this.value
+            }
+          } ) );         
+        }
+      }
     }
+
+    TextField.ENTER = 'textfield_enter';
 
     customElements.define( TextField.is, TextField );    
   </script>

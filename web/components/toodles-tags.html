@@ -18,20 +18,21 @@
 
       connectedCallback() {
         super.connectedCallback();
-        this._editable = false;
+        this.setAttribute( 'data-editable', false );
         this.doRemove = this.doRemove.bind( this );        
       }
 
       set editable( value ) {
-        this._editable = value;
+        this.setAttribute( 'data-editable', value );
+        // this._editable = value;
 
         for( var c = 0; c < this.children.length; c++ ) {
-          this.children[c].editable = this._editable;
+          this.children[c].editable = value;
         }
       }
 
       get editable() {
-        return this._editable;
+        return this.getAttribute( 'data-editable' ) == 'true' ? true : false;
       }
 
       set list( value ) {
@@ -49,13 +50,7 @@
           for( let p = 0; p < parts.length; p++ ) {
             let chip = document.createElement( 'toodles-chip' );
             chip.addEventListener( Chip.REMOVE, this.doRemove );
-
-            console.log( this.editable );
-
-            if( this.editable ) {
-              chip.setAttribute( 'editable', this.editable );
-            }
-
+            chip.editable = this.editable;
             chip.label = parts[p];
             this.appendChild( chip );
           }

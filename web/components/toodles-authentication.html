@@ -93,6 +93,8 @@
 
         this.$.password.placeholder = 'Password';
         this.$.password.type = 'password';
+        this.$.password.return = true;
+        this.$.password.addEventListener( TextField.ENTER, evt => this.doPassword( evt ) );
 
         this.$.check.label = 'Stay signed in';
       }
@@ -137,6 +139,21 @@
         } );
       }
 
+      shake() {
+        TweenMax.fromTo( this, 0.5, {
+          x: -10
+        }, {
+          x: 10, 
+          ease: RoughEase.ease.config( {
+            strength: 1, 
+            points: 10, 
+            template: Linear.easeNone, 
+            randomize: false
+          } ), 
+          clearProps: 'x'
+        } );
+      }
+
       show() {
         this.style.display = 'flex';        
         TweenMax.to( this, 0.50, {
@@ -144,18 +161,26 @@
         } );
       }
 
-      onCreate( evt ) {
-        console.log( 'Create account.' );
-      }
-
-      onSignIn( evt ) {
-        this.loading = true;
+      submit() {
+        this.loading = true;        
         this.dispatchEvent( new CustomEvent( Authentication.SIGN_IN, {
           detail: {
             email: this.email,
             password: this.password
           }
         } ) );        
+      }
+
+      onCreate( evt ) {
+        console.log( 'Create account.' );
+      }
+
+      doPassword( evt ) {
+        this.submit();
+      }
+
+      onSignIn( evt ) {
+        this.submit();
       }   
     }
 

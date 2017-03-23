@@ -20,6 +20,7 @@ class Toodles {
 
   doLoginError( evt ) {
     this.authentication.loading = false;
+    this.authentication.shake();
   }
 
   doLoginSuccess( evt ) {

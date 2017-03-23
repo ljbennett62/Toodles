@@ -272,19 +272,25 @@
       }
 
       onTagsChange( evt ) {
-        console.log( 'Tags changed.' );
-        console.log( evt.detail.tags );
         this.task.tags = evt.detail.tags;
         this.$.summary_tags.list = this.task.tags;
+
+        model.taskEdit( this.task );        
       }
 
       onTagsKey( evt ) {
         if( evt.keyCode == 13 ) {
-          this.task.tags = this.task.tags + ',' + this.$.add_tag.value.trim();
+          if( this.task.tags.length > 0 ) {
+            this.task.tags = this.task.tags + ',' + this.$.add_tag.value.trim();
+          } else {
+            this.task.tags = this.$.add_tag.value.trim();
+          }
+
+          model.taskEdit( this.task );
+
           this.$.summary_tags.list = this.task.tags;          
           this.$.detail_tags.list = this.task.tags;
-          // TODO: Should not have to call this 
-          this.$.detail_tags.editable = true;
+
           this.$.add_tag.value = '';
         }
       }

@@ -44,11 +44,17 @@ class Model {
       }
     } ).then( result => {      
       if( result == null ) {
-        this.locations.push( {
+        let any = {
           id: null,
           account: null,
           name: 'Any'
-        } );
+        };
+
+        if( this.locations == null ) {
+          this.locations = [any];
+        } else {
+          this.locations.push( any );
+        }
       } else{
         console.log( result );        
 
