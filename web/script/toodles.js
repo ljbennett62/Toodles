@@ -12,10 +12,16 @@ class Toodles {
     this.toolbar.addEventListener( Toolbar.EXIT, evt => this.doExit( evt ) );
 
     this.list = document.querySelector( 'toodles-list' );
+
     this.filter = document.querySelector( 'toodles-filter' );
+    this.filter.addEventListener( Filter.CHANGE, evt => this.doFilter( evt ) );
     
     this.action = document.querySelector( 'toodles-action' );
     this.action.addEventListener( Action.CREATE_TASK, evt => this.doTaskCreate( evt ) );
+  }
+
+  doFilter( evt ) {
+    this.list.filter( evt.detail );
   }
 
   doLoginError( evt ) {

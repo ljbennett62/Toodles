@@ -5,7 +5,8 @@
   <template>
     <style>
       :host {
-        bottom: 228px;
+        bottom: 228px; /* in case calendar */
+        bottom: 172px;
         display: none;
         left: 0;
         overflow: auto;
@@ -55,6 +56,12 @@
         item.addEventListener( Item.OPEN, evt => this.doItemOpen( evt ) );
         this.appendChild( item );
         item.task = task;          
+      }
+
+      filter( parameters ) {
+        for( let c = 0; c < this.children.length; c++ ) {
+          this.children[c].filter( parameters );
+        }
       }
 
       hide() {

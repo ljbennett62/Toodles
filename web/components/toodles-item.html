@@ -223,6 +223,35 @@
         this.opened = false;
       }
 
+      filter( parameters ) {
+        console.log( parameters );
+        console.log( this.task );
+
+        this.show();
+
+        if( parameters.location != 'any' ) {
+          if( this.task.location != parameters.location ) {
+            this.hide();
+          }          
+        }
+
+        if( parameters.duration > 0 ) {
+          if( this.task.duration != parameters.duration ) {
+            this.hide();
+          }          
+        }
+
+        if( parameters.energy > 0 ) {
+          if( this.task.energy != parameters.energy ) {
+            this.hide();
+          }          
+        }
+      }
+
+      hide() {
+        this.style.display = 'none';
+      }
+
       open() {
         this.style.opacity = 1;
         this.$.summary_tags.hide();
@@ -230,6 +259,10 @@
         this.$.details.style.display = 'flex';        
 
         this.opened = true;
+      }
+
+      show() {
+        this.style.display = 'flex';
       }
 
       onCompleteChange( evt ) {

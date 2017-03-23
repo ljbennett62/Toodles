@@ -58,7 +58,7 @@ class Model {
       } else{
         console.log( result );        
 
-        // Sort list
+        // Sort locations by name
         result = result.sort( ( a, b ) => {
           if( a.name.toUpperCase() < b.name.toUpperCase() ) {
             return -1;
@@ -90,7 +90,8 @@ class Model {
         this.tasks = [];
       } else {
         console.log( result );
-        this.tasks = result;
+        this.tasks = result.splice( 0 );
+        this.taskSort();
         this.emit( Model.READY, null );
       }
     } ).catch( error => {
@@ -133,6 +134,30 @@ class Model {
         task.name]
     } ).then( result => {
       console.log( result );
+    } );
+  }
+
+  taskSort() {
+    // Sort tasks by date
+    this.tasks = this.tasks.sort( ( a, b ) => {
+      if( a.due < b.due ) {
+        return -1;
+      }
+
+      if( a.due > b.due ) {
+        return 1;
+      }
+
+      return 0;
+    } );
+
+    // Sort tasks by complete
+    this.tasks = this.tasks.sort( ( a, b ) => {
+      if( a.complete ) {
+        return 1;
+      }
+
+      return -1;
     } );
   }
 

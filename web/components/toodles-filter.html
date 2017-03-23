@@ -98,12 +98,23 @@
       }
 
       doChange( evt ) {
-        console.log( this.$.calendar.selected );
+        // Left in case calendar
+        // console.log( this.$.calendar.selected );
         console.log( this.$.location.selected );
         console.log( this.$.duration.index );        
         console.log( this.$.energy.index );        
+
+        this.dispatchEvent( new CustomEvent( Filter.CHANGE, {
+          detail: {
+            location: this.$.location.selected.id,
+            duration: this.$.duration.index,
+            energy: this.$.energy.index
+          }
+        } ) );         
       } 
     }
+
+    Filter.CHANGE = 'filter_change';
 
     customElements.define( Filter.is, Filter );    
   </script>
