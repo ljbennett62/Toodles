@@ -90,7 +90,7 @@
       }
 
       onLocation( evt ) {
-        console.log( 'Location.' );
+        this.dispatchEvent( new CustomEvent( Action.CREATE_LOCATION, null ) );          
       }
 
       onTask( evt ) {

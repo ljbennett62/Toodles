@@ -18,10 +18,24 @@ class Toodles {
     
     this.action = document.querySelector( 'toodles-action' );
     this.action.addEventListener( Action.CREATE_TASK, evt => this.doTaskCreate( evt ) );
+    this.action.addEventListener( Action.CREATE_LOCATION, evt => this.doLocationCreate( evt ) );    
   }
 
   doFilter( evt ) {
     this.list.filter( evt.detail );
+  }
+
+  doLocationCreate( evt ) {
+    console.log( 'Create location.' );
+
+    let message = document.querySelector( 'toodles-message' );
+
+    if( message ) {
+      message.remove();
+    }
+
+    message = document.createElement( 'toodles-message' );
+    document.body.appendChild( message );
   }
 
   doLoginError( evt ) {

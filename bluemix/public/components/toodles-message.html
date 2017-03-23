@@ -1,0 +1,67 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+
+<dom-module id="toodles-message">
+  <template>
+    <style>
+      :host {
+        background-color: #FAFAFA;
+        border-radius: 2px;
+        box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );          
+        display: flex;
+        flex-direction: column;
+        padding: 24px 24px 0px 24px;
+        position: absolute;
+        width: 268px;
+      }
+
+      button {
+        background: none;
+        border: none;
+        color: #2196F3;
+        font-size: 14px;
+        font-weight: 500;
+        height: 36px;
+        margin: 0 0 0 8px;
+        outline: none;
+        padding: 0 8px 0 8px;
+        text-transform: uppercase;
+      }
+
+      div {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        height: 52px;
+        justify-content: flex-end;
+      }
+
+      #message {
+        margin: 0 0 24px 0;
+      }
+
+      #title {
+        color: rgba( 0, 0, 0, 0.87 );
+        font-size: 20px;
+        font-weight: 500;
+        margin: 0 0 20px 0;
+      }
+    </style>
+    <p id="title">Create a location</p>
+    <p id="message">This is some stuff.</p>
+    <div>
+      <button>Cancel</button>
+      <button>OK</button>
+    </div>
+  </template>
+  <script>
+    class Message extends Polymer.Element {  
+      static get is() { return 'toodles-message' }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }      
+    }
+
+    customElements.define( Message.is, Message );    
+  </script>
+</dom-module>
