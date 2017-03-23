@@ -54,12 +54,26 @@
       #label.selected {
         color: #2196F3;  
       }
+
+      #spinner {
+        background-image: url( /img/loading.blue.svg );
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-size: 20px;        
+        bottom: 8px;
+        display: none;
+        height: 36px;
+        right: 0;
+        position: absolute;
+        width: 36px;
+      }
     </style>
     <p id="label"></p>
     <div id="divider"></div>
     <span>
       <input id="field" on-focus="onFocus" on-blur="onBlur" on-keypress="onKey">
     </span>
+    <div id="spinner"></div>
   </template>
   <script>
     class TextField extends Polymer.Element {  
@@ -91,6 +105,18 @@
         return this.getAttribute( 'data-return' ) == 'true' ? true : false;
       }
  
+      set spinner( value ) {
+        if( value ) {
+          this.$.spinner.style.display = 'block';
+        } else {
+          this.$.spinner.style.display = 'none';
+        }
+      }
+
+      get spiner() {
+        return this.$.spinner.style.display == 'block' ? true : false;
+      }
+
       set type( value ) {
         this.$.field.type = value;
       }

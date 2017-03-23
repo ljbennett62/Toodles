@@ -19,6 +19,9 @@ class Toodles {
     this.action = document.querySelector( 'toodles-action' );
     this.action.addEventListener( Action.CREATE_TASK, evt => this.doTaskCreate( evt ) );
     this.action.addEventListener( Action.CREATE_LOCATION, evt => this.doLocationCreate( evt ) );    
+
+    this.doMessageAccept = this.doMessageAccept.bind( this );
+    this.doMessageCancel = this.doMessageCancel.bind( this );
   }
 
   doFilter( evt ) {
@@ -26,8 +29,6 @@ class Toodles {
   }
 
   doLocationCreate( evt ) {
-    console.log( 'Create location.' );
-
     let message = document.querySelector( 'toodles-message' );
 
     if( message ) {
@@ -35,7 +36,10 @@ class Toodles {
     }
 
     message = document.createElement( 'toodles-message' );
+    message.addEventListener( Message.CANCEL, this.doMessageCancel );
+    message.addEventListener( Message.OK, this.doMessageAccept );    
     document.body.appendChild( message );
+    message.show();
   }
 
   doLoginError( evt ) {
@@ -47,6 +51,29 @@ class Toodles {
     this.authentication.id = model.account.id;
     this.authentication.hide();
     this.toolbar.show();
+  }
+
+  doMessageAccept( evt ) {
+    let location = {
+      id: uuid.v4(),
+      account: model.account.id,
+      name: evt.detail.value
+    };
+
+    model.locationAdd( location );
+    model.locations.push( location );
+    model.locationSort();
+
+    this.filter.places = model.locations;
+
+    this.doMessageCancel( evt );    
+  }
+
+  doMessageCancel( evt ) {
+    let message = document.querySelector( 'toodles-message' );
+    message.removeEventListener( Message.CANCEL, this.doMessageCancel );
+    message.removeEventListener( Message.OK, this.doMessageAccept );
+    message.remove();
   }
 
   doModelReady( evt ) {

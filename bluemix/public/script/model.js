@@ -58,6 +58,7 @@ class Model {
       } else{
         console.log( result );        
 
+        /*
         // Sort locations by name
         result = result.sort( ( a, b ) => {
           if( a.name.toUpperCase() < b.name.toUpperCase() ) {
@@ -77,8 +78,11 @@ class Model {
           account: null,
           name: 'Any'
         } );
+        */
 
         this.locations = result;
+        this.locationSort();
+
         return Blockchain.request( {
           method: Blockchain.QUERY,
           operation: 'task_browse',
@@ -99,6 +103,45 @@ class Model {
     } );
   }
 
+  locationAdd( location ) {
+    Blockchain.request( {
+      method: Blockchain.INVOKE,
+      operation: 'location_add',
+      values: [
+        location.id, 
+        location.account, 
+        location.name
+      ]
+    } ).then( result => {
+      console.log( result );
+    } );    
+  }
+
+  locationSort() {
+    if( this.locations[0].id == 'any' ) {
+      this.locations.splice( 0, 1 );      
+    }
+
+    // Sort locations by name
+    this.locations = this.locations.sort( ( a, b ) => {
+      if( a.name.toUpperCase() < b.name.toUpperCase() ) {
+        return -1;
+      }
+
+      if( a.name.toUpperCase() > b.name.toUpperCase() ) {
+        return 1;
+      }
+
+      return 0;
+    } );        
+
+    this.locations.unshift( {
+      id: 'any',
+      account: null,
+      name: 'Any'
+    } );    
+  }
+
   taskAdd( task ) {
     Blockchain.request( {
       method: Blockchain.INVOKE,
@@ -111,7 +154,8 @@ class Model {
         task.location, 
         task.duration.toString(), 
         task.energy.toString(), 
-        task.created.toString()]
+        task.created.toString()
+      ]
     } ).then( result => {
       console.log( result );
     } );    
