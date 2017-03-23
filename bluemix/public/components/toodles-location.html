@@ -129,6 +129,31 @@
         }
       }
 
+      filter( location ) {
+        let previous = location.index;
+
+        for( let p = 0; p < this.places.length; p++ ) {
+          if( this.places[p].name == location.name ) {
+            this.index = p;
+            break;
+          }
+        }
+
+        if( previous != this.index ) {
+          this.update();
+        }
+
+        this.dispatchEvent( new CustomEvent( Location.CHANGE, {
+          detail: location
+        } ) );              
+      }
+
+      remove( location ) {
+        this.dispatchEvent( new CustomEvent( Location.DELETE, {
+          detail: location
+        } ) );
+      }
+
       update() {
         // Reset buttons
         this.$.left.removeEventListener( 'click', this.doPage );
@@ -200,31 +225,25 @@
       }
 
       doPlace( evt ) {
-        let previous = this.index;
-
-        for( let p = 0; p < this.places.length; p++ ) {
-          if( this.places[p].name == evt.target.innerHTML ) {
-            this.index = p;
-            break;
-          }
-        }
-
-        if( previous != this.index ) {
-          this.update();
-        }
-
-        this.dispatchEvent( new CustomEvent( Location.CHANGE, {
-          detail: {
+        if( evt.altKey && evt.target.getAttribute( 'data-id' ) != 'any' ) {
+          this.remove( {
+            id: evt.target.getAttribute( 'data-id' ),
+            name: evt.target.innerHTML.trim(),
+            account: evt.target.getAttribute( 'data-account' )
+          } );
+        } else {
+          this.filter( {
             index: this.index,
             id: evt.target.getAttribute( 'data-id' ),
             name: evt.target.innerHTML.trim(),
             account: evt.target.getAttribute( 'data-account' )
-          }
-        } ) );                
+          } )
+        }  
       }
     }
 
     Location.CHANGE = 'location_change';
+    Location.DELETE = 'location_delete';    
     Location.PLACES = 7;
 
     customElements.define( Location.is, Location );    

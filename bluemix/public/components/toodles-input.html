@@ -133,6 +133,10 @@
         return this.$.field.value;
       }
 
+      focus() {
+        this.$.field.focus();
+      }
+
       onBlur( evt ) {
         this.$.label.classList.remove( 'selected' );        
         this.$.divider.classList.remove( 'selected' );

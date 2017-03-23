@@ -4,6 +4,7 @@ class Toodles {
     model.addEventListener( Model.WRONG, evt => this.doLoginError( evt ) );    
     model.addEventListener( Model.LOGIN, evt => this.doLoginSuccess( evt ) );    
     model.addEventListener( Model.READY, evt => this.doModelReady( evt ) );
+    model.addEventListener( Model.LOCATION_ADD, evt => this.doMessageCancel( evt ) );
 
     this.authentication = document.querySelector( 'toodles-authentication' );
     this.authentication.addEventListener( Authentication.SIGN_IN, evt => this.doSignIn( evt ) );
@@ -15,6 +16,7 @@ class Toodles {
 
     this.filter = document.querySelector( 'toodles-filter' );
     this.filter.addEventListener( Filter.CHANGE, evt => this.doFilter( evt ) );
+    this.filter.addEventListener( Location.DELETE, evt => this.doLocationDelete( evt ) );    
     
     this.action = document.querySelector( 'toodles-action' );
     this.action.addEventListener( Action.CREATE_TASK, evt => this.doTaskCreate( evt ) );
@@ -42,6 +44,11 @@ class Toodles {
     message.show();
   }
 
+  doLocationDelete( evt ) {
+    model.locationDelete( evt.detail );
+    this.filter.places = model.locations;
+  }
+
   doLoginError( evt ) {
     this.authentication.loading = false;
     this.authentication.shake();
@@ -65,8 +72,6 @@ class Toodles {
     model.locationSort();
 
     this.filter.places = model.locations;
-
-    this.doMessageCancel( evt );    
   }
 
   doMessageCancel( evt ) {

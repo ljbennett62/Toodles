@@ -34,6 +34,7 @@
 
         this.$.calendar.addEventListener( Calendar.CHANGE, evt => this.doChange( evt ) );
         this.$.location.addEventListener( Location.CHANGE, evt => this.doChange( evt ) );
+        this.$.location.addEventListener( Location.DELETE, evt => this.doDelete( evt ) );        
         this.$.duration.addEventListener( Duration.CHANGE, evt => this.doChange( evt ) );        
         this.$.energy.addEventListener( Energy.CHANGE, evt => this.doChange( evt ) );    
       }
@@ -114,6 +115,12 @@
           }
         } ) );         
       } 
+
+      doDelete( evt ) {
+        this.dispatchEvent( new CustomEvent( Location.DELETE, {
+          detail: evt.detail
+        } ) );                
+      }
     }
 
     Filter.CHANGE = 'filter_change';

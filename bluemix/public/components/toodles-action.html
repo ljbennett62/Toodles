@@ -91,6 +91,7 @@
 
       onLocation( evt ) {
         this.dispatchEvent( new CustomEvent( Action.CREATE_LOCATION, null ) );          
+        this.doLeave( evt );
       }
 
       onTask( evt ) {

@@ -114,8 +114,26 @@ class Model {
       ]
     } ).then( result => {
       console.log( result );
+      this.emit( Model.LOCATION_ADD, null );       
     } );    
   }
+
+  locationDelete( location ) {
+    for( let p = 0; p < this.locations.length; p++ ) {
+      if( this.locations[p].id == location.id ) {
+        this.locations.splice( p, 1 );
+        break;
+      }
+    }
+
+    Blockchain.request( {
+      method: Blockchain.INVOKE,
+      operation: 'location_delete',
+      values: [location.id], 
+    } ).then( result => {
+      console.log( result );     
+    } );    
+  }  
 
   locationSort() {
     if( this.locations[0].id == 'any' ) {
@@ -222,6 +240,8 @@ Model.ENERGY = [
   {id: '2', name: 'Normal'},
   {id: '3', name: 'High'},      
 ];
+
+Model.LOCATION_ADD = 'model_location_add';
 
 Model.LOGIN = 'model_login';
 Model.READY = 'model_ready';
