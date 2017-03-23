@@ -76,7 +76,17 @@
       }
 
       onBlur( evt ) {
-        this.send();
+        if( this.$.field.value.trim().length == 0 ) {
+          this.value = 0;
+
+          this.dispatchEvent( new CustomEvent( Due.CHANGE, {
+            detail: {
+              due: 0
+            }
+          } ) );                   
+        } else {
+          this.send();
+        }
       }
 
       doLoad( evt ) {

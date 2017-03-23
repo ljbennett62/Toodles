@@ -224,9 +224,6 @@
       }
 
       filter( parameters ) {
-        console.log( parameters );
-        console.log( this.task );
-
         this.show();
 
         if( parameters.location != 'any' ) {
@@ -329,29 +326,43 @@
       }
 
       onDue( evt ) {
-        this.task.due = evt.detail.due;
-        this.$.remain.due = this.task.due;
-        model.taskEdit( this.task );        
+        if( this.task.due != evt.detail.due ) {
+          this.task.due = evt.detail.due;
+          this.$.remain.due = this.task.due;
+          model.taskEdit( this.task );
+        }
       }
 
       onDuration( evt ) {
-        this.task.duration = parseInt( evt.detail.item.id );
-        model.taskEdit( this.task );        
+        let duration = parseInt( evt.detail.item.id );
+
+        if( this.task.duration != duration ) {
+          this.task.duration = duration;
+          model.taskEdit( this.task );                  
+        }
       }
 
       onEnergy( evt ) {
-        this.task.energy = parseInt( evt.detail.item.id );
-        model.taskEdit( this.task );        
+        let energy = parseInt( evt.detail.item.id );
+
+        if( this.task.energy != energy ) {
+          this.task.energy = energy;
+          model.taskEdit( this.task );        
+        }
       }
 
       onLocation( evt ) {
-        this.task.location = evt.detail.item.id;
-        model.taskEdit( this.task );        
+        if( this.task.location != evt.detail.item.id ) {
+          this.task.location = evt.detail.item.id;
+          model.taskEdit( this.task );        
+        }
       }      
 
       onNotes( evt ) {
-        this.task.notes = this.$.notes.value;
-        model.taskEdit( this.task );        
+        if( this.task.notes != this.$.notes.value ) {
+          this.task.notes = this.$.notes.value;
+          model.taskEdit( this.task );     
+        }   
       }            
     }
 

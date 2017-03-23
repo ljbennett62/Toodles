@@ -48,15 +48,17 @@ class Toodles {
   doExit( evt ) {
     this.action.hide();
 
+    // Clear list
     this.list.hide();
     this.list.data = [];
 
+    // Reset filtering
     this.filter.hide();
-    this.filter.places = [{
-      id: 'any',
-      account: null,
-      name: 'Any'
-    }];
+    this.filter.location = {
+      id: 'any'
+    };
+    this.filter.duration = 0;
+    this.filter.energy = 0;
 
     this.toolbar.hide();
 

@@ -48,13 +48,22 @@
       }
 
       add( task ) {
-        this.create( task );
+        this.create( task, true );
+
+        // Show open for detail editing
+        this.children[0].open();
       }
 
-      create( task ) {
+      create( task, first = false ) {
         let item = document.createElement( 'toodles-item' );
         item.addEventListener( Item.OPEN, evt => this.doItemOpen( evt ) );
-        this.appendChild( item );
+
+        if( first ) {
+          this.insertBefore( item, this.children[0] );
+        } else {
+          this.appendChild( item );          
+        }
+
         item.task = task;          
       }
 
