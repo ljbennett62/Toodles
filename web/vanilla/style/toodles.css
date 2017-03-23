@@ -1,9 +1,0 @@
-body {
-  background-color: #FAFAFA;  
-  display: flex;
-  flex-direction: column;
-  font-family: 'Roboto', sans-serif;  
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-}
