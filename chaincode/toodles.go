@@ -197,6 +197,9 @@ func ( t *SimpleChaincode ) account_read( stub shim.ChaincodeStubInterface, args
   for _, account := range accounts {  
     // Match
     if account.Name == args[0] && account.Password == args[1] {
+      // Sanitize
+      account.Password = ""
+
       // JSON encode
       bytes, err = json.Marshal( account )
       found = true
