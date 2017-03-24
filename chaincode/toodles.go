@@ -156,9 +156,7 @@ func ( t *SimpleChaincode ) Query( stub shim.ChaincodeStubInterface, function st
 // *
 
 // Browse accounts
-// Really dangerous
-// Should never expose directly in this manner
-// Used here for demonstration and debugging
+// Used to cross-assign tasks
 func ( t *SimpleChaincode ) account_browse( stub shim.ChaincodeStubInterface, args []string ) ( []byte, error ) {
   bytes, err := stub.GetState( "toodles_accounts" )
 
@@ -166,19 +164,17 @@ func ( t *SimpleChaincode ) account_browse( stub shim.ChaincodeStubInterface, ar
     return nil, errors.New( "Unable to get accounts." ) 
   }
 
-  if( args[0] == "partial" ) {
-    var accounts []Account
+  var accounts []Account
 
-    // From JSON to data structure
-    err = json.Unmarshal( bytes, &accounts )
+  // From JSON to data structure
+  err = json.Unmarshal( bytes, &accounts )
 
-    // Scrub passwords
-    for _, account := range accounts {  
-      account.Password = ""
-    }    
+  // Scrub passwords
+  for a := 0; a < len( accounts ); a++ {  
+    accounts[a].Password = ""
+  }    
 
-    bytes, err = json.Marshal( accounts )
-  }
+  bytes, err = json.Marshal( accounts )
 
   return bytes, nil
 }
@@ -216,7 +212,7 @@ func ( t *SimpleChaincode ) account_read( stub shim.ChaincodeStubInterface, args
   return bytes, nil
 }
 
-// Arguments: ID, Name, Password
+// Arguments: ID, First, Last, Name, Password
 func ( t *SimpleChaincode ) account_edit( stub shim.ChaincodeStubInterface, args []string ) ( []byte, error ) {
   bytes, err := stub.GetState( "toodles_accounts" )
 
@@ -233,8 +229,10 @@ func ( t *SimpleChaincode ) account_edit( stub shim.ChaincodeStubInterface, args
   for a := 0; a < len( accounts ); a++ {  
     // Match
     if accounts[a].Id == args[0] {
-      accounts[a].Name = args[1]
-      accounts[a].Password = args[2]      
+      accounts[a].First = args[1]
+      accounts[a].Last = args[2]      
+      accounts[a].Name = args[3]
+      accounts[a].Password = args[4]      
       break
     }
   }
