@@ -9,17 +9,17 @@
 <body>
 
 <div>
-  <input id="peer" value="https://ba5d025f326946a1a17a37c120fd233c-vp0.us.blockchain.ibm.com:5002/chaincode">
-  <input id="user" value="user_type1_0">  
+  <input id="peer" value="https://ba5d025f326946a1a17a37c120fd233c-vp0.us.blockchain.ibm.com:5002/chaincode" placeholder="Blockchain Peer (URL)" title="Blockchain Peer (URL)">
+  <input id="user" value="user_type1_0" placeholder="Blockchain User" title="Blockchain User">  
 </div>
 
 <div>
   <input class="method" value="deploy" hidden="true">
   <input class="function" value="init" readonly>    
-  <input class="argument" value="init">    
-  <input id="repository" value="https://github.com/krhoyt/Toodles/chaincode">
+  <input class="argument" value="init" readonly>    
+  <input id="repository" value="https://github.com/krhoyt/Toodles/chaincode" placeholder="Repository" title="Repository">
   <button>Deploy Chaincode</button>
-  <input id="chaincode" value="70177304acad01c1ce20133af749b0c832cf0587a39c59c222ed713756c02d03174001abe859b6b8b700283e38860eea21cc177c7f8c828926ca3d79ab98bf65">
+  <input id="chaincode" value="17abdb9fcc50d315a5f9239e7675baffafe72439cdb30c06f3d83d57c667ef48ffea02b639878d1a31f0025e0f2aef28f13e47fd15ec597555ada9d49de3e9f7" placeholder="Chaincode ID" title="Chaincode ID">
 </div>
 
 <!-- Accounts -->
@@ -33,37 +33,37 @@
 <div>
   <input class="method" value="query" hidden="true">
   <input class="function" value="account_read" readonly>  
-  <input class="argument" value="krhoyt" title="Username">
-  <input class="argument" value="abc123" title="Password">  
+  <input class="argument" value="krhoyt" placeholder="Username" title="Username">
+  <input class="argument" value="abc123" placeholder="Password" title="Password">  
   <button>Account Read</button>
 </div>
 
 <div>
   <input class="method" value="invoke" hidden="true">
   <input class="function" value="account_edit" readonly>  
-  <input class="argument" value="abc-123" title="Account ID">
-  <input class="argument" value="Kevin" title="First name">  
-  <input class="argument" value="Hoyt" title="Last name">      
-  <input class="argument" value="krhoyt" title="Username">  
-  <input class="argument" value="abc123" title="Password">  
+  <input class="argument" value="abc-123" placeholder="Account ID" title="Account ID">
+  <input class="argument" value="Kevin" placeholder="First Name" title="First Name">  
+  <input class="argument" value="Hoyt" placeholder="Last Name" title="Last Name">      
+  <input class="argument" value="krhoyt" placeholder="Username" title="Username">  
+  <input class="argument" value="abc123" placeholder="Password" title="Password">  
   <button>Account Edit</button>
 </div>
 
 <div>
   <input class="method" value="invoke" hidden="true">
   <input class="function" value="account_add" readonly>  
-  <input class="argument" value="abc-123" title="Account ID">
-  <input class="argument" value="Kevin" title="First name">  
-  <input class="argument" value="Hoyt" title="Last name">    
-  <input class="argument" value="krhoyt" title="Username">  
-  <input class="argument" value="abc123" title="Password">  
+  <input class="argument" value="abc-123" placeholder="Account ID" title="Account ID">
+  <input class="argument" value="Kevin" placeholder="First Name" title="First Name">  
+  <input class="argument" value="Hoyt" placeholder="Last Name" title="Last Name">    
+  <input class="argument" value="krhoyt" placeholder="Username" title="Username">  
+  <input class="argument" value="abc123" placeholder="Password" title="Password">  
   <button>Account Add</button>
 </div>
 
 <div>
   <input class="method" value="invoke" hidden="true">
   <input class="function" value="account_delete" readonly>  
-  <input class="argument" value="abc-123" title="Account ID">
+  <input class="argument" value="abc-123" placeholder="Account ID" title="Account ID">
   <button>Account Delete</button>
 </div>
 
@@ -72,51 +72,51 @@
 <div>
   <input class="method" value="query" hidden="true">
   <input class="function" value="task_browse" readonly>  
-  <input class="argument" value="all">
+  <input class="argument" value="all" placeholder="Task ID" title="Task ID">
   <button>Task Browse</button>
 </div>
 
 <div>
   <input class="method" value="query" hidden="true">
   <input class="function" value="task_read" readonly>  
-  <input class="argument" value="xyz-321">
+  <input class="argument" value="xyz-321" placeholder="Task ID" title="Task ID">
   <button>Task Read</button>
 </div>
 
 <div>
   <input class="method" value="invoke" hidden="true">
   <input class="function" value="task_edit" readonly>  
-  <input class="argument" value="xyz-321" placeholder="Task ID">
-  <input class="argument" value="abc-123" placeholder="Account ID">
-  <input class="argument" value="0" placeholder="Due">  
-  <input class="argument" value="any" placeholder="Location ID">  
-  <input class="argument" value="0" placeholder="Duration">    
-  <input class="argument" value="0" placeholder="Energy">    
-  <input class="argument" placeholder="Tags">    
-  <input class="argument" placeholder="Notes">    
-  <input class="argument" value="false" placeholder="Complete">    
-  <input class="argument" value="New To Do" placeholder="Name">  
+  <input class="argument" value="xyz-321" placeholder="Task ID" title="Task ID">
+  <input class="argument" value="abc-123" placeholder="Account ID" title="Account ID">
+  <input class="argument" value="0" placeholder="Due" title="Date Due (millis)">  
+  <input class="argument" value="any" placeholder="Location ID" title="Location ID">  
+  <input class="argument" value="0" placeholder="Duration" title="Duration (0-5)">    
+  <input class="argument" value="0" placeholder="Energy" title="Energy (0-3)">    
+  <input class="argument" placeholder="Tags" title="Tags (CSV string)">    
+  <input class="argument" placeholder="Notes" title="Notes">    
+  <input class="argument" value="false" placeholder="Complete" title="Complete">    
+  <input class="argument" value="New To Do" placeholder="Name" title="Name">  
   <button>Task Edit</button>
 </div>
 
 <div>
   <input class="method" value="invoke" hidden="true">
   <input class="function" value="task_add" readonly>  
-  <input class="argument" value="xyz-321">
-  <input class="argument" value="abc-123">
-  <input class="argument" value="New To Do" placeholder="Name">  
-  <input class="argument" value="0" placeholder="Due">  
-  <input class="argument" value="any" placeholder="Location ID">  
-  <input class="argument" value="0" placeholder="Duration">    
-  <input class="argument" value="0" placeholder="Energy">    
-  <input class="argument" value="1489509097754">  
+  <input class="argument" value="xyz-321" placeholder="Task ID" title="Task ID">
+  <input class="argument" value="abc-123" placeholder="Account ID" title="Account ID">
+  <input class="argument" value="New To Do" placeholder="Name" title="Task Name">  
+  <input class="argument" value="0" placeholder="Due" title="Date Due (millis)">  
+  <input class="argument" value="any" placeholder="Location ID" title="Location ID">  
+  <input class="argument" value="0" placeholder="Duration" title="Duration (0-5)">    
+  <input class="argument" value="0" placeholder="Energy" title="Energy (0-3)">    
+  <input class="argument" value="1489509097754" placeholder="Created At" title="Created At (millis)">  
   <button>Task Add</button>
 </div>
 
 <div>
   <input class="method" value="invoke" hidden="true">
   <input class="function" value="task_delete" readonly>  
-  <input class="argument" value="xyz-321">
+  <input class="argument" value="xyz-321" placeholder="Task ID" title="Task ID">
   <button>Task Delete</button>
 </div>
 
@@ -125,39 +125,39 @@
 <div>
   <input class="method" value="query" hidden="true">
   <input class="function" value="location_browse" readonly>  
-  <input class="argument" value="all">
+  <input class="argument" value="all" placeholder="Location ID" title="Location ID">
   <button>Location Browse</button>
 </div>
 
 <div>
   <input class="method" value="query" hidden="true">
   <input class="function" value="location_read" readonly>  
-  <input class="argument" value="xyz-321">
+  <input class="argument" value="xyz-321" placeholder="Location ID" title="Location ID">
   <button>Location Read</button>
 </div>
 
 <div>
   <input class="method" value="invoke" hidden="true">
   <input class="function" value="location_edit" readonly>  
-  <input class="argument" value="xyz-321">
-  <input class="argument" value="abc-123">
-  <input class="argument" value="Denver">
+  <input class="argument" value="xyz-321" placeholder="Location ID" title="Location ID">
+  <input class="argument" value="abc-123" placeholder="Account ID" title="Account ID">
+  <input class="argument" value="Denver" placeholder="Location Name" title="Location Name">
   <button>Location Edit</button>
 </div>
 
 <div>
   <input class="method" value="invoke" hidden="true">
   <input class="function" value="location_add" readonly>  
-  <input class="argument" value="xyz-321">
-  <input class="argument" value="abc-123">
-  <input class="argument" value="Denver">
+  <input class="argument" value="xyz-321" placeholder="Location ID" title="Location ID">
+  <input class="argument" value="abc-123" placeholder="Account ID" title="Account ID">
+  <input class="argument" value="Denver" placeholder="Location Name" title="Location Name">
   <button>Location Add</button>
 </div>
 
 <div>
   <input class="method" value="invoke" hidden="true">
   <input class="function" value="location_delete" readonly>  
-  <input class="argument" value="xyz-321">
+  <input class="argument" value="xyz-321" placeholder="Location ID" title="Location ID">
   <button>Location Delete</button>
 </div>
 
