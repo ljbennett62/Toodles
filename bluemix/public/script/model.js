@@ -155,6 +155,23 @@ class Model {
     } );    
   }
 
+  taskDelete( task ) {
+    for( let t = 0; t < this.tasks.length; t++ ) {
+      if( this.tasks[t].id == task.id ) {
+        this.tasks.splice( t, 1 );
+        break;
+      }
+    }
+
+    Blockchain.request( {
+      method: Blockchain.INVOKE,
+      operation: 'task_delete',
+      values: [task.id]
+    } ).then( result => {
+      console.log( result );
+    } );  
+  }
+
   taskEdit( task ) {
     Blockchain.request( {
       method: Blockchain.INVOKE,
