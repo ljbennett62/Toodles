@@ -23,11 +23,11 @@ class Model {
     }
   }
 
-  login( email, password ) {
+  login( username, password ) {
     Blockchain.request( {
       method: Blockchain.QUERY,
       operation: 'account_read',
-      values: [email, password]
+      values: [username, password]
     } ).then( result => {
       if( result == null ) {
         console.log( 'Not logged in.' );
@@ -43,61 +43,37 @@ class Model {
         } );
       }
     } ).then( result => {      
-      if( result == null ) {
-        let any = {
-          id: null,
-          account: null,
-          name: 'Any'
-        };
+      let any = {
+        id: 'any',
+        account: null,
+        name: 'Any'
+      };
 
-        if( this.locations == null ) {
-          this.locations = [any];
-        } else {
-          this.locations.push( any );
-        }
+      if( result == null ) {
+        console.log( 'No locations.' );
+        this.locations = [any];
       } else{
         console.log( result );        
-
-        /*
-        // Sort locations by name
-        result = result.sort( ( a, b ) => {
-          if( a.name.toUpperCase() < b.name.toUpperCase() ) {
-            return -1;
-          }
-
-          if( a.name.toUpperCase() > b.name.toUpperCase() ) {
-            return 1;
-          }
-
-          return 0;
-        } );    
-
-        // Push default to front of list
-        result.unshift( {
-          id: 'any',
-          account: null,
-          name: 'Any'
-        } );
-        */
-
-        this.locations = result;
+        this.locations = result.slice( 0 );
         this.locationSort();
-
-        return Blockchain.request( {
-          method: Blockchain.QUERY,
-          operation: 'task_browse',
-          values: [this.account.id]
-        } );
       }
+
+      return Blockchain.request( {
+        method: Blockchain.QUERY,
+        operation: 'task_browse',
+        values: [this.account.id]
+      } );      
     } ).then( result => {
       if( result == null ) {
+        console.log( 'No tasks.' );
         this.tasks = [];
       } else {
-        console.log( result );
-        this.tasks = result.splice( 0 );
+        console.log( result );          
+        this.tasks = result.slice( 0 );
         this.taskSort();
-        this.emit( Model.READY, null );
       }
+
+      this.emit( Model.READY, null );      
     } ).catch( error => {
       console.log( error );
     } );

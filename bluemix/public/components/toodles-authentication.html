@@ -72,7 +72,7 @@
     </style>
     <div class="dialog">
       <div class="photo"></div>
-      <toodles-input id="email"></toodles-input>
+      <toodles-input id="username"></toodles-input>
       <toodles-input id="password"></toodles-input>
       <button id="signin" on-click="onSignIn">Sign In</button>
       <toodles-check id="check"></toodles-check>
@@ -88,8 +88,8 @@
 
         this.id = null;
 
-        this.$.email.placeholder = 'Email';
-        this.$.email.value = 'krhoyt';
+        this.$.username.placeholder = 'Username';
+        this.$.username.value = 'krhoyt';
 
         this.$.password.placeholder = 'Password';
         this.$.password.type = 'password';
@@ -99,12 +99,12 @@
         this.$.check.label = 'Stay signed in';
       }
 
-      set email( value ) {
-        this.$.email.value = value;
+      set username( value ) {
+        this.$.username.value = value;
       }
 
-      get email() {
-        return this.$.email.value;
+      get username() {
+        return this.$.username.value;
       }
 
       set loading( value ) {
@@ -165,7 +165,7 @@
         this.loading = true;        
         this.dispatchEvent( new CustomEvent( Authentication.SIGN_IN, {
           detail: {
-            email: this.email,
+            username: this.username,
             password: this.password
           }
         } ) );        

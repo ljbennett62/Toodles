@@ -112,7 +112,7 @@ class Toodles {
   }
 
   doSignIn( evt ) {
-    model.login( evt.detail.email, evt.detail.password );
+    model.login( evt.detail.username, evt.detail.password );
   }
 
   doTaskCreate( evt ) {
