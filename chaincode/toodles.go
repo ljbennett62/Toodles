@@ -29,7 +29,9 @@ type  SimpleChaincode struct {
 // Account
 type Account struct {
   Id       string `json:"id"`
-  Email    string `json:"email"`
+  First    string `json:"first"`
+  Last     string `json:"last"`
+  Name     string `json:"name"`
   Password string `json:"password"`
 }
 
@@ -164,10 +166,24 @@ func ( t *SimpleChaincode ) account_browse( stub shim.ChaincodeStubInterface, ar
     return nil, errors.New( "Unable to get accounts." ) 
   }
 
+  if( args[0] == "partial" ) {
+    var accounts []Account
+
+    // From JSON to data structure
+    err = json.Unmarshal( bytes, &accounts )
+
+    // Scrub passwords
+    for _, account := range accounts {  
+      account.Password = ""
+    }    
+
+    bytes, err = json.Marshal( accounts )
+  }
+
   return bytes, nil
 }
 
-// Arguments: Email, Password
+// Arguments: Name, Password
 func ( t *SimpleChaincode ) account_read( stub shim.ChaincodeStubInterface, args []string ) ( []byte, error ) {
   bytes, err := stub.GetState( "toodles_accounts" )
 
@@ -184,7 +200,7 @@ func ( t *SimpleChaincode ) account_read( stub shim.ChaincodeStubInterface, args
   // Look for match
   for _, account := range accounts {  
     // Match
-    if account.Email == args[0] && account.Password == args[1] {
+    if account.Name == args[0] && account.Password == args[1] {
       // JSON encode
       bytes, err = json.Marshal( account )
       found = true
@@ -200,7 +216,7 @@ func ( t *SimpleChaincode ) account_read( stub shim.ChaincodeStubInterface, args
   return bytes, nil
 }
 
-// Arguments: ID, Email, Password
+// Arguments: ID, Name, Password
 func ( t *SimpleChaincode ) account_edit( stub shim.ChaincodeStubInterface, args []string ) ( []byte, error ) {
   bytes, err := stub.GetState( "toodles_accounts" )
 
@@ -217,7 +233,7 @@ func ( t *SimpleChaincode ) account_edit( stub shim.ChaincodeStubInterface, args
   for a := 0; a < len( accounts ); a++ {  
     // Match
     if accounts[a].Id == args[0] {
-      accounts[a].Email = args[1]
+      accounts[a].Name = args[1]
       accounts[a].Password = args[2]      
       break
     }
@@ -231,7 +247,7 @@ func ( t *SimpleChaincode ) account_edit( stub shim.ChaincodeStubInterface, args
   return nil, nil
 }
 
-// Arguments: ID, Email, Password
+// Arguments: ID, First, Last, Name, Password
 func ( t *SimpleChaincode ) account_add( stub shim.ChaincodeStubInterface, args []string ) ( []byte, error ) {
   bytes, err := stub.GetState( "toodles_accounts" )
 
@@ -243,13 +259,15 @@ func ( t *SimpleChaincode ) account_add( stub shim.ChaincodeStubInterface, args 
 
   // Build JSON values
   id := "\"id\": \"" + args[0] + "\", "
-  email := "\"email\": \"" + args[1] + "\", "
-  password := "\"password\": \"" + args[2] + "\""
+  first := "\"first\": \"" + args[1] + "\", "
+  last := "\"last\": \"" + args[2] + "\", "
+  name := "\"name\": \"" + args[3] + "\", "
+  password := "\"password\": \"" + args[4] + "\""
 
   // Make into a complete JSON string
   // Decode into a single account value
-  content := "{" + id + email + password + "}"
-  err = json.Unmarshal( []byte(content), &account )
+  content := "{" + id + first + last + name + password + "}"
+  err = json.Unmarshal( []byte( content ), &account )
 
   var accounts []Account
 
