@@ -24,7 +24,9 @@ Toodles has three data structures represented on the Blockchain ...
 
 * Account
   * Id
-  * Email
+  * First
+  * Last
+  * Name
   * Password
 
 * Location
@@ -61,7 +63,7 @@ The format of the JSON message varies slightly depending on the operation, but g
     "chaincodeID": "abc-123-xyz-456",
     "ctorMsg": {
       "function": "create_account",
-      "args": ["abc-123", "krhoyt@us.ibm.com", "mypassword"]
+      "args": ["abc-123", "Kevin", "Hoyt", "krhoyt", "mypassword"]
     },
     "secureContext": "user_1",
     "type": 1
