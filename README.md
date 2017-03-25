@@ -85,3 +85,19 @@ In the case of Toodles, a web-based interface is supplied to allow users to logi
 The chaincode for Toodles is very specific for the application and its related data structures. It stands to reason however that those specifics could be abstracted away at the chaincode such that the arguments would specify which data model to edit, how, and with what values.  This would simplify the chaincode substantially, and make future database-oriented deployments as simple as using the exact same chaincode.
 
 When it comes to database structures, a common follow-on project that generally emerges is that of scaffolding. A scaffolding project is currently in progress, and is called Fabric Composer. If you are a Go or JavaScript (Angular) professional, then you should consider getting involved.
+
+# Fun Facts
+
+## Due Date
+
+The "Due Date" field in the task item detail allows for a broad range of input values - so much so that a calendar view is not necessary. This is accomplished using NLP (Natural Language Processing) and [Natty Date Parser](http://natty.joestelmach.com/). Terms such as "today", "tomorrow", and "one week" are all acceptable, as well anything that looks like a date such as "Apr 1", "April 1 2017", "Apr. 1, 2017".
+
+## Serverless
+
+While Natty is designed to be installed on your own server(s), there is a "Try It Out" section on the web site. Filling in the field makes an XHR (XMLHttpRequest, Ajax) request against an existing installation. CORS (Cross-Origin Resource Sharing) is not supported, so to use this service in the browser, you would need a proxy. I did not want to run another server, so I turned to an OpenWhisk Web Action. 
+
+OpenWhisk is an Apache open source project for serverless implementations. The term "serverless" is a bit of a misnomer. There is still a server involved, but you are only charged for the time your code is actually executing. OpenWisk actions can be enabled to support web interaction. Due date changes call an OpenWhisk action, which calls Natty. The resulting date is formatted and displayed.
+
+## Your Code Sucks
+
+Cool! Thanks! The initial build of Toodles took just under thirty (30) days. When I was handed the project, I knew next to nothing about Blockchain, no Go language experience (chaincode), and Polymer RC had just landed. I suspect the code reflects that. I was the sole developer for the entire stack, and there are many improvements I know I would make. If you want to make some, I would encourage you to consider getting involved.
