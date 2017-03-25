@@ -31,7 +31,7 @@ class Model {
     } ).then( result => {
       if( result == null ) {
         console.log( 'Not logged in.' );
-        this.emit( Model.WRONG, null );        
+        throw( new Error( 'Not logged in.' ) );
       } else {
         console.log( result );
         this.account = result;
@@ -75,7 +75,7 @@ class Model {
 
       this.emit( Model.READY, null );      
     } ).catch( error => {
-      console.log( error );
+      this.emit( Model.WRONG, null );        
     } );
   }
 
