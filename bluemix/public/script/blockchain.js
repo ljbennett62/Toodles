@@ -41,7 +41,7 @@ class Blockchain {
   
 }
 
-Blockchain.CHAINCODE = '17abdb9fcc50d315a5f9239e7675baffafe72439cdb30c06f3d83d57c667ef48ffea02b639878d1a31f0025e0f2aef28f13e47fd15ec597555ada9d49de3e9f7';
+Blockchain.CHAINCODE = '7721bc7da47454354e074589798d9ef3ae59be24a0fb8705b190b6b9e4c28ab7a38ca1df36537a25873f3660672e37d8e3b37c54c5c0432f3415f6c04c36ff1a';
 Blockchain.URL = 'https://ba5d025f326946a1a17a37c120fd233c-vp0.us.blockchain.ibm.com:5002/chaincode';
 Blockchain.USER = 'user_type1_0';
 

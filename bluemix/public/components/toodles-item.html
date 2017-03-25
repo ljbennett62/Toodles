@@ -4,6 +4,7 @@
 <link rel="import" href="/components/toodles-remain.html">
 <link rel="import" href="/components/toodles-due.html">
 <link rel="import" href="/components/toodles-combo.html">
+<link rel="import" href="/components/toodles-menu.html">
 
 <dom-module id="toodles-item">
   <template>
@@ -318,6 +319,18 @@
         this.$.options.style.display = 'flex';        
       }
 
+      doPeer( evt ) {
+        let clone = Object.assign( {}, this.task );
+        clone.account = evt.detail.id;
+        clone.location = 'any';
+
+        model.taskEdit( clone );
+
+        // TODO: Fully destroy reference
+        evt.target.remove();        
+        this.remove();        
+      }
+
       onCompleteChange( evt ) {
         this.task.complete = evt.detail.selected;
         model.taskEdit( this.task );
@@ -337,7 +350,23 @@
       }
 
       onForward( evt ) {
-        console.log( 'Forward.' );
+        let menu = document.querySelector( 'toodles-menu' );
+        let position = Toodles.getPosition( evt.target );
+
+        if( menu ) {
+          menu.remove();
+        }
+
+        menu = document.createElement( 'toodles-menu' );
+        menu.addEventListener( Menu.SELECT, evt => this.doPeer( evt ) );
+        menu.style.width = '250px';
+        menu.style.left = ( position.x - 194 ) + 'px';
+        // TODO: Better positioning
+        // TODO: Better dismissal
+        // Menus have 8 pixels at the top
+        menu.style.top = ( position.y - 8 ) + 'px';
+        menu.items = model.peers;
+        document.body.appendChild( menu );
       }
 
       onLabelBlur( evt ) {

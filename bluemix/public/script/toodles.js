@@ -134,6 +134,32 @@ class Toodles {
     this.list.add( task );
   }
 
+  // https://www.kirupa.com/html5/get_element_position_using_javascript.htm
+  static getPosition( element ) {
+    let xPos = 0;
+    let yPos = 0;
+
+    while( element ) {
+      if( element.tagName == 'BODY' ) {
+        let xScroll = element.scrollLeft || document.documentElement.scrollLeft;
+        let yScroll = element.scrollTop || document.documentElement.scrollTop;
+
+        xPos += ( element.offsetLeft - xScroll + element.clientLeft);
+        yPos += ( element.offsetTop - yScroll + element.clientTop );
+      } else {
+        xPos += ( element.offsetLeft - element.scrollLeft + element.clientLeft );
+        yPos += ( element.offsetTop - element.scrollTop + element.clientTop );
+      }
+
+      element = element.offsetParent;
+    }
+
+    return {
+      x: xPos,
+      y: yPos
+    };
+  }
+
 }
 
 let model = new Model();

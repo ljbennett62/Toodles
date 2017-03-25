@@ -80,6 +80,10 @@ class Model {
         values: [this.account.id]
       } );  
     } ).then( result => {
+      for( let r = 0; r < result.length; r++ ) {
+        result[r].name = result[r].first + ' ' + result[r].last;
+      }
+
       this.peers = result.slice( 0 );
       this.peerSort();
       this.emit( Model.READY, null );      
@@ -147,7 +151,7 @@ class Model {
 
   peerSort() {
     // Sort peer accounts by last name
-    this.peers = this.peers.sort( ( a, b, ) => {
+    this.peers = this.peers.sort( ( a, b ) => {
       if( a.last.toUpperCase() < b.last.toUpperCase() ) {
         return -1;
       }
