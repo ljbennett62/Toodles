@@ -5,6 +5,7 @@ class Model {
 
     this.account = null;
     this.locations = null;
+    this.peers = null;
     this.tasks = null;
   }
 
@@ -73,6 +74,14 @@ class Model {
         this.taskSort();
       }
 
+      return Blockchain.request( {
+        method: Blockchain.QUERY,
+        operation: 'account_browse',
+        values: [this.account.id]
+      } );  
+    } ).then( result => {
+      this.peers = result.slice( 0 );
+      this.peerSort();
       this.emit( Model.READY, null );      
     } ).catch( error => {
       this.emit( Model.WRONG, null );        
@@ -136,6 +145,21 @@ class Model {
     } );    
   }
 
+  peerSort() {
+    // Sort peer accounts by last name
+    this.peers = this.peers.sort( ( a, b, ) => {
+      if( a.last.toUpperCase() < b.last.toUpperCase() ) {
+        return -1;
+      }
+
+      if( a.last.toUpperCase() > b.last.toUpperCase() ) {
+        return 1;
+      }
+
+      return 0;      
+    } );
+  }
+
   taskAdd( task ) {
     Blockchain.request( {
       method: Blockchain.INVOKE,
@@ -153,6 +177,17 @@ class Model {
     } ).then( result => {
       console.log( result );
     } );    
+  }
+
+  taskAssign( task ) {
+    for( let t = 0; t < this.tasks.length; t++ ) {
+      if( this.tasks[t].id == task.id ) {
+        this.tasks.splice( t, 1 );
+        break;
+      }
+    }
+
+    this.taskEdit( task );    
   }
 
   taskDelete( task ) {

@@ -165,16 +165,20 @@ func ( t *SimpleChaincode ) account_browse( stub shim.ChaincodeStubInterface, ar
   }
 
   var accounts []Account
+  var peers []Account
 
   // From JSON to data structure
   err = json.Unmarshal( bytes, &accounts )
 
   // Scrub passwords
   for a := 0; a < len( accounts ); a++ {  
-    accounts[a].Password = ""
+    if( accounts[a].Id != args[0] ) {
+      accounts[a].Password = "";
+      peers = append( peers, accounts[a] );
+    }
   }    
 
-  bytes, err = json.Marshal( accounts )
+  bytes, err = json.Marshal( peers )
 
   return bytes, nil
 }
