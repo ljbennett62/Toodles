@@ -164,6 +164,20 @@ class Model {
     } );
   }
 
+  reset( accounts, locations, tasks ) {
+    Blockchain.request( {
+      method: Blockchain.INVOKE,
+      operation: 'reset_data',
+      values: [
+        accounts,
+        locations,
+        tasks
+      ]
+    } ).then( result => {
+      console.log( result );
+    } );        
+  }
+
   taskAdd( task ) {
     Blockchain.request( {
       method: Blockchain.INVOKE,

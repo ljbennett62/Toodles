@@ -71,7 +71,7 @@
       }
     </style>
     <div class="dialog">
-      <div class="photo"></div>
+      <div class="photo" on-click="onReset"></div>
       <toodles-input id="username"></toodles-input>
       <toodles-input id="password"></toodles-input>
       <button id="signin" on-click="onSignIn">Sign In</button>
@@ -179,12 +179,19 @@
         this.submit();
       }
 
+      onReset( evt ) {
+        if( evt.altKey ) {
+          this.dispatchEvent( new CustomEvent( Authentication.RESET, null ) );          
+        }
+      }
+
       onSignIn( evt ) {
         this.submit();
       }   
     }
 
     Authentication.SIGN_IN = 'authentication_sign_in';
+    Authentication.RESET = 'authentication_reset';    
 
     customElements.define( Authentication.is, Authentication );    
   </script>

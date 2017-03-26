@@ -61,7 +61,7 @@
       "id": "27a5b073-e8f5-40d2-bf94-744006f6088d",
       "account": "01b5b881-f017-4053-80da-354d2dcf20f7",
       "name": "Work"
-    },
+    }
   ],
   "tasks": [
     {
@@ -96,7 +96,7 @@
       "duration": 1,
       "energy": 0,
       "tags": "business",
-      "notes": "Because 37 meetings in a week just isn't enough.",
+      "notes": "Because 37 meetings in a week just is not enough.",
       "complete": false,
       "name": "Schedule More Meetings",
       "created": 1490464573737

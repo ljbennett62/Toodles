@@ -8,6 +8,7 @@ class Toodles {
 
     this.authentication = document.querySelector( 'toodles-authentication' );
     this.authentication.addEventListener( Authentication.SIGN_IN, evt => this.doSignIn( evt ) );
+    this.authentication.addEventListener( Authentication.RESET, evt => this.doReset( evt ) );    
 
     this.toolbar = document.querySelector( 'toodles-toolbar' );
     this.toolbar.addEventListener( Toolbar.EXIT, evt => this.doExit( evt ) );
@@ -109,6 +110,20 @@ class Toodles {
     this.toolbar.hide();
 
     this.authentication.show();
+  }
+
+  doReset( evt ) {
+    let xhr = new XMLHttpRequest();
+    xhr.addEventListener( 'load', evt => { 
+      let data = JSON.parse( xhr.responseText );
+      model.reset( 
+        JSON.stringify( data.accounts ),
+        JSON.stringify( data.locations ),
+        JSON.stringify( data.tasks )
+      );
+    } );
+    xhr.open( 'GET', '/data/reset.json', true );
+    xhr.send( null );
   }
 
   doSignIn( evt ) {

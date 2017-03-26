@@ -98,6 +98,14 @@ While Natty is designed to be installed on your own server(s), there is a "Try I
 
 OpenWhisk is an Apache open source project for serverless implementations. The term "serverless" is a bit of a misnomer. There is still a server involved, but you are only charged for the time your code is actually executing. OpenWisk actions can be enabled to support web interaction. Due date changes call an OpenWhisk action, which calls Natty. The resulting date is formatted and displayed.
 
+## Reset
+
+At the login screen, you can Alt+Click on the IBM logo to reset all the data. This is totally for demonstration purposes, and if you intend to put this into production, you should be sure to disable and/or remove the reset functionality. The source JSON file is "/bluemix/public/data/reset.json". You can edit this to reflect whatever data is pertinent to your audience. For example, you might want to login using an account name that reflects your Twitter account for social media purposes. 
+
+## Test
+
+There is a web page hosted at "/test.html" that gives you granular control over working with the data. This is useful for debugging purposes where you need to see more of the data than just what is pertinent to your account. You can use this to edit fields on the fly as well for demonstrations. As with the previous mentioned "Reset" functionality, you will want to remove this in a production environment.
+
 ## Your Code Sucks
 
 Cool! Thanks! The initial build of Toodles took just under thirty (30) days. When I was handed the project, I knew next to nothing about Blockchain, no Go language experience (chaincode), and Polymer RC had just landed. I suspect the code reflects that. I was the sole developer for the entire stack, and there are many improvements I know I would make. If you want to make some, I would encourage you to consider getting involved.
