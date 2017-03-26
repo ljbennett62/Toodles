@@ -124,6 +124,8 @@ func ( t *SimpleChaincode ) Invoke( stub shim.ChaincodeStubInterface, function s
     return t.location_edit( stub, args )
   } else if function == "location_delete" {
     return t.location_delete( stub, args )
+  } else if function == "reset_data" {
+    return t.reset_data( stub, args )
   }
 
   return nil, errors.New( "Function with the name " + function + " does not exist." )  
@@ -679,6 +681,19 @@ func ( t *SimpleChaincode ) location_delete( stub shim.ChaincodeStubInterface, a
 
   return nil, nil
 }
+
+// *
+// Reset data
+// *
+
+func ( t *SimpleChaincode ) reset_data( stub shim.ChaincodeStubInterface, args []string ) ( []byte, error ) {
+  stub.PutState( "toodles_accounts", []byte( args[0] ) )
+  stub.PutState( "toodles_locations", []byte( args[1] ) )  
+  stub.PutState( "toodles_tasks", []byte( args[2] ) )    
+
+  return nil, nil  
+}
+
 
 // Main
 func main() {
